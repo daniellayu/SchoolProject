@@ -4,7 +4,7 @@ from teacherdb import TeacherDb
 from studentdb import StudentDb
 from lessonsdb import LessonsDb
 
-#hi
+
 
 class Server(object):
     def __init__(self, ip, port):
