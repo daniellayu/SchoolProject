@@ -1,10 +1,10 @@
 import socket
 import threading
-from DriveProject.server_d.teacherdb import TeacherDb
-from DriveProject.server_d.studentdb import StudentDb
-from DriveProject.server_d.lessonsdb import LessonsDb
+from teacherdb import TeacherDb
+from studentdb import StudentDb
+from lessonsdb import LessonsDb
 
-
+#hi
 
 class Server(object):
     def __init__(self, ip, port):
