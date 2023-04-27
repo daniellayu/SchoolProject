@@ -148,8 +148,26 @@ class TeacherDb(object):
                 print("teacher not found")
                 return False
         except:
-            return "failed to get teacher id by name"
+            return "failed to get teacher id by id"
 
+
+
+    def get_teacher_name_by_id(self, teacher_id):
+        try:
+            conn = sqlite3.connect('database.db')
+            print("Opened database successfully")
+            str = f"SELECT {self.__firstname}, {self.__lastname} from {self.__tablename} where {self.__teacherId} = {teacher_id}"
+            print(str)
+            cursor = conn.execute(str)
+            row = cursor.fetchall()
+            if row:
+                print(row[0][0] + " " + row[0][1])
+                return row[0][0] + " " + row[0][1]
+            else:
+                print("teacher not found")
+                return False
+        except:
+            return "failed to get teacher name by id"
 
 
 
@@ -161,4 +179,6 @@ class TeacherDb(object):
 #t.delete_by_id(1)
 #t.update_by_id(1, 160, 11)
 #t.get_teacher_id_by_name("q") #2
+#t.get_teacher_name_by_id(3)
+#t.get_teacher_id_by_id(144)
 

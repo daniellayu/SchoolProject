@@ -1,7 +1,8 @@
 import tkinter
 from tkinter import *
 from tkinter import messagebox
-from DriveProject.server_d.studentdb import StudentDb
+from SchoolProject.DriveProject.server_d.studentdb import StudentDb
+from choose_teacher_screen import ChooseTeacher
 import threading
 
 
@@ -10,7 +11,7 @@ class SignupStudent(tkinter.Toplevel):
         super().__init__(parent)
         self.parent = parent
         self.studentDb = StudentDb()
-        self.geometry('400x450')
+        self.geometry('500x500')
         self.title('Sign up as student')
         Label(self, text="SIGN UP STUDENT", background="light blue").place(x=150, y=55)
         Label(self, text="first name").place(x=75, y=100)
@@ -55,6 +56,13 @@ class SignupStudent(tkinter.Toplevel):
         self.client_handler = threading.Thread(target=self.sign_up_student, args=())
         self.client_handler.daemon = True
         self.client_handler.start()
+
+
+    def open_choose_teacher(self):
+        window = ChooseTeacher(self)
+        window.grab_set()
+        self.withdraw()
+
 
     def close(self):
         self.parent.deiconify() #show parent

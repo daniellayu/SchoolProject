@@ -11,6 +11,7 @@ class ChooseTeacher(tkinter.Toplevel):
         print(self.parent.parent.parent.client_socket)
         self.geometry('800x400')
         self.title('Choose Teacher Screen')
+        #Label(self, text="choose your teacher").place(x=100, y=35)
         self.table = ttk.Treeview(self, columns=("c1", "c2", "c3", "c4", "c5", "c6", "c7"), show="headings", heigh="7")
         self.table.column("#1", anchor=CENTER, width=70)
         self.table.column("#2", anchor=CENTER, width=100)

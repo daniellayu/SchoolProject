@@ -1,28 +1,17 @@
 from tkinter import *
-from tkcalendar import Calendar
-
-# Create Object
-root = Tk()
-
-# Set geometry
-root.geometry("400x400")
-
-# Add Calendar
-cal = Calendar(root, selectmode='day', data_pattern='d/m/yy')
-
-cal.pack(pady=20)
+from PIL import ImageTk, Image
 
 
-def grad_date():
-    date.config(text="Selected Date is: " + cal.get_date())
+img_adress = "refresh_btn.png"
+img_refresh = Image.open(img_adress)
+resized = img_refresh.resized((35, 35), Image.Resampling.LANCZOS)
+refresh = ImageTK.PhotoImage
 
 
-# Add Button and Label
-Button(root, text="Get Date",
-       command=grad_date).pack(pady=20)
 
-date = Label(root, text="")
-date.pack(pady=20)
 
-# Execute Tkinter
-root.mainloop()
+#if __name__ == "__main__":
+     #o = InsertLesson()
+     #o.mainloop()
+    #today_date = date.today()
+    #print(today_date)

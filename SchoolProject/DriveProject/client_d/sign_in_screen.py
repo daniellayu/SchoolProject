@@ -1,11 +1,13 @@
 import tkinter
 from tkinter import *
 from tkinter import ttk, messagebox
-from DriveProject.server_d.teacherdb import TeacherDb
-from DriveProject.server_d.studentdb import StudentDb
+from SchoolProject.DriveProject.server_d.teacherdb import TeacherDb
+from SchoolProject.DriveProject.server_d.studentdb import StudentDb
 import threading
-from menu_teacher_screen import MenuTeacher
-from menu_student_screen import MenuStudent
+#from menu_teacher_screen import MenuTeacher
+#from menu_student_screen import MenuStudent
+from lessons_list_screen import LessonsList
+from student_lessons_list_screen import StudentLessonsList
 
 
 class SignInScreen(tkinter.Toplevel):
@@ -16,21 +18,31 @@ class SignInScreen(tkinter.Toplevel):
         self.id_t = "0"
         self.teacherdb = TeacherDb()
         self.studentdb = StudentDb()
-        self.geometry('400x400')
+        self.geometry('500x500')
         self.title('Signin')
-        Label(self, text="SIGN IN", background="light blue").place(x=170, y=75)
-        Label(self, text="ID", background="light blue").place(x=75, y=150)
-        self.entry_id = Entry(self)
-        self.entry_id.place(x=150, y=150)
-        Label(self, text="Password", background="light blue").place(x=75, y=200)
-        self.entry_password = Entry(self, show='*')
-        self.entry_password.place(x=150, y=200)
+        #self.config(bg="#57a1f8")
+
+        Label(self, text="SIGN IN", fg="#57a1f8", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=185, y=75)
+
+        Label(self, text="ID:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=150, y=150)
+        self.entry_id = Entry(self, width=25, fg='black', bg='#57a1f8', border=0, font=('Microsoft YaHei UI Light', 11))
+        self.entry_id.place(x=150, y=175)
+
+        Label(self, text="Password:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=150, y=235)
+        self.entry_password = Entry(self, show='*', width=25, fg='black', bg='#57a1f8', border=0, font=('Microsoft YaHei UI Light', 11))
+        self.entry_password.place(x=150, y=260)
+
         self.radio = IntVar()
-        self.trb = Radiobutton(self, text="teacher", value=1, variable=self.radio).place(x=100, y=250)
-        self.srb = Radiobutton(self, text="student", value=2, variable=self.radio).place(x=200, y=250)
-        self.btn_signin = Button(self, text="Sign in", background="light pink", command=self.sign_in).place(x=170, y=275)
+        self.trb = Radiobutton(self, text="teacher", fg='#57a1f8', font=('Microsoft YaHei UI Light', 11, 'bold'),
+                               value=1, variable=self.radio).place(x=150, y=310)
+        self.srb = Radiobutton(self, text="student", fg='#57a1f8', font=('Microsoft YaHei UI Light', 11, 'bold'),
+                               value=2, variable=self.radio).place(x=250, y=310)
+
+        self.btn_signin = Button(self, text="Sign in", fg='white', bg='#57a1f8',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.sign_in).place(x=185, y=400)
+
         self.btn_close = Button(self, text="Close", background="red", command=self.close)
-        self.btn_close.place(x=170, y=325)
+        self.btn_close.place(x=185, y=450)
 
 
     def handle_add_user(self):
@@ -53,7 +65,7 @@ class SignInScreen(tkinter.Toplevel):
             print(data)
             self.id_t = self.entry_id.get()
             if data == "success Sign in":
-                self.open_menu_teacher_screen()
+                self.open_teacher_lessons_screen()
             if data == "failed Sign in":
                 messagebox.showerror("error", "teacher not exist, please sign up")
         if self.radio.get() == 2:
@@ -65,19 +77,19 @@ class SignInScreen(tkinter.Toplevel):
             print(data)
             self.id_s = self.entry_id.get()
             if data == "success Sign in":
-                self.open_menu_student_screen()
+                self.open_student_lessons_screen()
             if data == "failed Sign in":
                 messagebox.showerror("error", "student not exist, please sign up")
 
 
-    def open_menu_teacher_screen(self):
-        window = MenuTeacher(self)
+    def open_teacher_lessons_screen(self):
+        window = LessonsList(self)
         window.grab_set()
         self.withdraw()
 
 
-    def open_menu_student_screen(self):
-        window = MenuStudent(self)
+    def open_student_lessons_screen(self):
+        window = StudentLessonsList(self)
         window.grab_set()
         self.withdraw()
 

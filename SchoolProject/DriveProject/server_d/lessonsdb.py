@@ -81,18 +81,35 @@ class LessonsDb(object):
             return False
 
 
+    def get_lessons_by_student_id(self, student_id):
+        try:
+            connection = sqlite3.connect("database.db")
+            cursor = connection.cursor()
+            select_query = f"SELECT * FROM {self.__tablename} WHERE {self.__studentId} = {student_id}"
+            cursor.execute(select_query)
+            students = cursor.fetchall()
+            connection.close()
+            print("succeed to get all lessons")
+            print(students)
+            return students
+        except:
+            print("failed to get all lessons")
+            return False
+
+
+
     def delete_lesson_by_id(self, lesson_id):
         try:
             connection = sqlite3.connect("database.db")
             cursor = connection.cursor()
-            delete_query = f"DELETE FROM {self.__tablename} WHERE {self.__lessonId} = ?"
-            cursor.execute(delete_query, (lesson_id,))
+            delete_query = f"DELETE FROM {self.__tablename} WHERE {self.__lessonId} = {lesson_id}"
+            cursor.execute(delete_query)
             connection.commit()
             connection.close()
-            print("succeed to delete lesson by id")
+            print("Succeed to delete lesson by id")
             return True
         except:
-            print("failed to delete lesson by id")
+            print("Failed to delete lesson by id")
             return False
 
     def change_lesson_details(self, lesson_id, date, time):
@@ -125,28 +142,19 @@ class LessonsDb(object):
             return False
 
 
-    def get_price(self):
-        return self.__price
-
-
-    def get_date_and_time_by_id(self):
-        pass
-
-
-    def last_lessons(self):
-        pass
 
 
 #l = LessonsDb()
-#l.insert_lesson("3", "3", "13.4.2022", "10:00", "180")
+#l.insert_lesson("3", "2", "13.4.2022", "10:00", "180")
 #l.insert_lesson("3", "1", "4.5.2022", "15:30", "170")
 #x = l.get_all_lessons()
 #print(x)
 #y = l.get_price()
 #print(y)
 #print(x[0][0])#1
-#l.delete_lesson_by_id(2)
+#l.delete_lesson_by_id(15)
 #l.update_date(3, "08.09.2022")
 #l.update_time(4, "14:00")
 #l.get_lessons_by_teacher_id(3)
 #l.change_lesson_details(7, "6.12.2022", "12:20")
+#l.get_lessons_by_student_id(2)

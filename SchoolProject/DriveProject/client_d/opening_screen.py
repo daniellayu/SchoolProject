@@ -16,8 +16,8 @@ class OpeningScreen(tkinter.Tk):
         self.config(bg="mint cream")
 
         self.img = Image.open('C://Users//danie//PycharmProjects//pythonProject//wheel.png')
-        self.size = self.img.resize((300, 275), Image.Resampling.LANCZOS)
-        self.image = ImageTk.PhotoImage(self.size)
+        self.resized = self.img.resize((300, 275), Image.Resampling.LANCZOS)
+        self.image = ImageTk.PhotoImage(self.resized)
         self.label_image = Label(self, image=self.image).place(x=100, y=50)
 
         self.handle_thread_socket()

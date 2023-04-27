@@ -7,7 +7,6 @@ class UpdateDetails(tkinter.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        print(self.parent.parent.id_t)
         self.geometry('300x300')
         self.title('Update Details Screen')
         # Label(self, text="first name:").place(x=40, y=75)

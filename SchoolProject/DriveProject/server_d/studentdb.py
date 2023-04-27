@@ -149,6 +149,7 @@ class StudentDb(object):
             print("failed to update teacher by id")
             return False
 
+
     def get_student_name_by_id(self, student_id):
         try:
             conn = sqlite3.connect('database.db')
@@ -167,9 +168,45 @@ class StudentDb(object):
             return "failed to get student name by id"
 
 
+    #student_id as PRIMARY KEY and id as ID
+    def get_student_id_by_id(self, id):
+        try:
+            conn = sqlite3.connect('database.db')
+            print("Opened database successfully")
+            str = f"SELECT {self.__studentId} from {self.__tablename} where {self.__Id} = '{id}'"
+            print(str)
+            cursor = conn.execute(str)
+            row = cursor.fetchall()
+            if row:
+                print(row[0][0])
+                return row[0][0]
+            else:
+                print("student not found")
+                return False
+        except:
+            return "failed to get student id by id"
 
 
-#s = StudentDb()
+    # teacher id and student id as PRIMARY KEY
+    def get_teacher_id_by_student_id(self, student_id):
+        try:
+            conn = sqlite3.connect('database.db')
+            print("Opened database successfully")
+            str = f"SELECT {self.__teacherId} from {self.__tablename} where {self.__studentId} = '{student_id}'"
+            print(str)
+            cursor = conn.execute(str)
+            row = cursor.fetchall()
+            if row:
+                print(row[0][0])
+                return row[0][0]
+            else:
+                print("student not found")
+                return False
+        except:
+            return "failed to get teacher id by student id"
+
+
+s = StudentDb()
 #s.insert("ana", "cohen", "anacgmail", "ana123", "05224", "32456")
 #x = s.get_all_students()
 #x = s.get_students_by_teacher_id("dani1")
@@ -177,3 +214,5 @@ class StudentDb(object):
 #s.delete_by_id(1)
 #s.update_teacher_id(2, 32456)
 #s.get_student_name_by_id(12)
+#s.get_student_id_by_id(12)
+s.get_teacher_id_by_student_id(2)

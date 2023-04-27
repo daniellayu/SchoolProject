@@ -1,6 +1,6 @@
 import tkinter
 from tkinter import *
-from DriveProject.server_d.teacherdb import TeacherDb
+from SchoolProject.DriveProject.server_d.teacherdb import TeacherDb
 from tkinter import messagebox
 import threading
 

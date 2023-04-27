@@ -7,7 +7,6 @@ class StudentsList(tkinter.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        print(self.parent.parent.id_t)
         self.geometry('700x400')
         self.title('Students List Screen')
         self.table = ttk.Treeview(self, columns=("c1", "c2", "c3", "c4", "c5", "c6"), show="headings", heigh="7")
