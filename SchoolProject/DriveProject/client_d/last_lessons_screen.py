@@ -24,6 +24,8 @@ class LastLessons(tkinter.Toplevel):
         self.table.heading("#5", text="price")
         self.table.place(x=150, y=100)
         self.listbox()
+        self.btn_close = Button(self, text="Close", background="red", command=self.close)
+        self.btn_close.place(x=650, y=370)
 
     def listbox(self):
         arr = ["lessons_list", self.parent.parent.id_t]
@@ -58,3 +60,7 @@ class LastLessons(tkinter.Toplevel):
                 if (month == int(arr_today_date[1]) and day <= int(arr_today_date[2])) or (month < int(arr_today_date[1])):
                     self.table.insert("", 'end', text="1", values=(line1[0], student_name, line1[3], line1[4], line1[5]))
 
+
+    def close(self):
+        self.parent.deiconify()
+        self.destroy()

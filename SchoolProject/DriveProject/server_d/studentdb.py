@@ -44,13 +44,10 @@ class StudentDb(object):
         try:
             connection = sqlite3.connect("database.db")
             cursor = connection.cursor()
-            print("0")
             insert_query = f"INSERT INTO {self.__tablename} ({self.__firstname}, {self.__lastname}," \
                            f" {self.__email}, {self.__password}, {self.__phonenumber}, {self.__Id}, {self.__teacherId}" \
                            f" ) VALUES (?, ?, ?, ?, ?, ?, ?)"
-            print("1")
             cursor.execute(insert_query, (firstname, lastname, email, password, phonenumber, Id, 0))
-            print("w")
             connection.commit()#release db
             connection.close()
             print("succeed to insert student")
@@ -73,19 +70,19 @@ class StudentDb(object):
             print("failed to get all students")
             return False
 
-    def get_students_by_teacher_id1(self, teacher_id):
-        try:
-            connection = sqlite3.connect("database.db")
-            cursor = connection.cursor()
-            select_query = f"SELECT {self.__studentId}, {self.__firstname}, {self.__lastname}, {self.__email}, {self.__phonenumber}, {self.__Id} FROM {self.__tablename} WHERE {self.__teacherId} = '{teacher_id}'"
-            cursor.execute(select_query)
-            students = cursor.fetchall()
-            connection.close()
-            print("succeed to get students by teacher id")
-            return students
-        except:
-            print("failed to get students by teacher id")
-            return False
+    # def get_students_by_teacher_id1(self, teacher_id):
+    #     try:
+    #         connection = sqlite3.connect("database.db")
+    #         cursor = connection.cursor()
+    #         select_query = f"SELECT {self.__studentId}, {self.__firstname}, {self.__lastname}, {self.__email}, {self.__phonenumber}, {self.__Id} FROM {self.__tablename} WHERE {self.__teacherId} = '{teacher_id}'"
+    #         cursor.execute(select_query)
+    #         students = cursor.fetchall()
+    #         connection.close()
+    #         print("succeed to get students by teacher id")
+    #         return students
+    #     except:
+    #         print("failed to get students by teacher id")
+    #         return False
 
     def get_students_by_teacher_id(self, teacher_id):
         try:
@@ -206,8 +203,8 @@ class StudentDb(object):
             return "failed to get teacher id by student id"
 
 
-s = StudentDb()
-#s.insert("ana", "cohen", "anacgmail", "ana123", "05224", "32456")
+#s = StudentDb()
+#s.insert("gaya", "tamari", "gaya@", "gaya12", "05224", "12")
 #x = s.get_all_students()
 #x = s.get_students_by_teacher_id("dani1")
 #print(x)
@@ -215,4 +212,4 @@ s = StudentDb()
 #s.update_teacher_id(2, 32456)
 #s.get_student_name_by_id(12)
 #s.get_student_id_by_id(12)
-s.get_teacher_id_by_student_id(2)
+#s.get_teacher_id_by_student_id(2)

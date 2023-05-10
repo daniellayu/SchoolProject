@@ -174,15 +174,28 @@ class Server(object):
                 elif server_data:
                     client_socket.send("failed to insert lesson".encode())
 
-            elif arr and len(arr) == 2 and arr[0] == "lessons_list_for_delete":
-                server_data = self.teacherdb.get_teacher_id_by_id(arr[1])
-                print("Server data: ", server_data)
-                server_data2 = self.lessonsdb.get_lessons_by_teacher_id(server_data)
-                print("Server data2: ", server_data2)
-                # Use list comprehension to join each tuple with the delimiter
-                string_data = '-'.join([','.join(map(str, item)) for item in server_data2])
-                print(string_data)
-                client_socket.send(string_data.encode())
+            elif arr and arr[0] == "update_t_work_days":
+                teacher_id = self.teacherdb.get_teacher_id_by_id(arr[1])
+                print(teacher_id)
+                days = ",".join(arr[2:])
+                print(days)
+                server_data = self.teacherdb.update_days(teacher_id, days)
+                print(server_data)
+                if server_data:
+                    client_socket.send("succeed to update teacher's days".encode())
+                elif server_data:
+                    client_socket.send("failed to update teacher's days".encode())
+
+
+            # elif arr and len(arr) == 2 and arr[0] == "lessons_list_for_delete":
+            #     server_data = self.teacherdb.get_teacher_id_by_id(arr[1])
+            #     print("Server data: ", server_data)
+            #     server_data2 = self.lessonsdb.get_lessons_by_teacher_id(server_data)
+            #     print("Server data2: ", server_data2)
+            #     # Use list comprehension to join each tuple with the delimiter
+            #     string_data = '-'.join([','.join(map(str, item)) for item in server_data2])
+            #     print(string_data)
+            #     client_socket.send(string_data.encode())
 
 
             else:

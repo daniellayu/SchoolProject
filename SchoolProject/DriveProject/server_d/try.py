@@ -1,29 +1,18 @@
-import tkinter
 from tkinter import *
-import tkinter as tk
-from tkinter import ttk
+from tkcalendar import *
+from datetime import date
 
 
-# conn = sqlite3.connect('database.db')
-# c = conn.cursor()
-#
-# c.execute("SELECT * FROM StudentDb")
-# data = c.fetchall()
-# conn.close()
-#
-# print(str(data))
-
-class View(tkinter.Tk):
-    def __init__(self):
-        super().__init__()
-        self.geometry('400x400')
-        self.entry_text = tk.StringVar()
-        self.entry1 = Entry(self, textvariable=self.entry_text)
-        self.entry_text.set(10)
-        self.entry1.place(x=100, y=100)
+class MyApp(Frame):
+    def __init__(self, master):
+        super().__init__(master)
+        self.master = master
+        self.cal = Calendar(self, selectmode='day', data_pattern='d/m/yy',
+                            disabled_dates=[date(2023, 5, 10), date(2023, 5, 15)])
+        self.cal.pack()
 
 
-if __name__ == "__main__":
-    v = View()
-    v.mainloop()
-
+root = Tk()
+app = MyApp(root)
+app.pack()
+root.mainloop()

@@ -3,6 +3,8 @@ from tkinter import *
 import tkinter as tk
 from tkinter import ttk, messagebox
 from tkcalendar import Calendar
+from datetime import datetime
+
 
 
 
@@ -43,8 +45,12 @@ class InsertLesson(tkinter.Toplevel):
         arr_date[0] = arr_date[1]
         arr_date[1] = self.cal.get_date().split("/")[0]
         date = '/'.join([str(e) for e in arr_date])
-        self.date.config(text="Selected Date is: " + date)
         print(date)
+        selected_date_str = self.cal.get_date()
+        selected_date_obj = datetime.strptime(selected_date_str, '%m/%d/%y')
+        self.day_name = selected_date_obj.strftime('%A')
+        print(self.day_name)
+        self.date.config(text="Selected Date is: " + date)
 
 
     def insert_lesson(self):

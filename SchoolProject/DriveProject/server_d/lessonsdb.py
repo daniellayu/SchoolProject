@@ -145,14 +145,14 @@ class LessonsDb(object):
 
 
 #l = LessonsDb()
-#l.insert_lesson("3", "2", "13.4.2022", "10:00", "180")
+#l.insert_lesson("2", "1", "4/3/2023", "10:00", "170")
 #l.insert_lesson("3", "1", "4.5.2022", "15:30", "170")
 #x = l.get_all_lessons()
 #print(x)
 #y = l.get_price()
 #print(y)
 #print(x[0][0])#1
-#l.delete_lesson_by_id(15)
+#l.delete_lesson_by_id(1)
 #l.update_date(3, "08.09.2022")
 #l.update_time(4, "14:00")
 #l.get_lessons_by_teacher_id(3)

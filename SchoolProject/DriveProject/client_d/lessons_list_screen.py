@@ -6,6 +6,7 @@ from change_lesson_details_screen import ChangeLessonDetails
 from students_list_screen import StudentsList
 from update_details_screen import UpdateDetails
 from chat_teacher import ChatTeacher
+from update_teacher_work_hours import UpdateTeacherWorkTime
 from datetime import date as d
 from PIL import ImageTk, Image
 
@@ -34,14 +35,25 @@ class LessonsList(tkinter.Toplevel):
         self.listbox()
         self.table.bind('<Button-1>', self.select_line)
 
+        #self.config(bg="#ff00b7")
+
         self.btn_last = Button(self, text="last lessons", command=self.open_last_lessons)
-        self.btn_last.place(x=50, y=120)
+        self.btn_last.place(x=50, y=50)
 
-        self.btn_s_list = Button(self, text="students list", command=self.open_student_list)
-        self.btn_s_list.place(x=50, y=170)
+        self.img3 = Image.open('C://Users//danie//OneDrive//שולחן העבודה//python img//students list btn.png')
+        self.resized = self.img3.resize((100, 50), Image.Resampling.LANCZOS)
+        self.img_s_list = ImageTk.PhotoImage(self.resized)
+        self.btn_s_list = Button(self, text="students list", command=self.open_student_list, image=self.img_s_list)
+        self.btn_s_list.place(x=30, y=100)
 
-        self.btn_update_t_details = Button(self, text="update my profile details", command=self.open_update_t_details)
-        self.btn_update_t_details.place(x=50, y=220)
+        self.btn_update_t_details = Button(self, text="update details", command=self.open_update_t_details)
+        self.btn_update_t_details.place(x=40, y=200)
+
+        self.img4 = Image.open('C://Users//danie//OneDrive//שולחן העבודה//python img//work days btn.png')
+        self.resized = self.img4.resize((100, 50), Image.Resampling.LANCZOS)
+        self.img_choose_days = ImageTk.PhotoImage(self.resized)
+        self.btn_choose_days = Button(self, text="my days", command=self.open_update_t_work_hours, image=self.img_choose_days)
+        self.btn_choose_days.place(x=30, y=250)
 
         self.img = Image.open('C://Users//danie//OneDrive//שולחן העבודה//python img//refresh btn.png')
         self.resized = self.img.resize((35, 35), Image.Resampling.LANCZOS)
@@ -136,6 +148,10 @@ class LessonsList(tkinter.Toplevel):
         window.grab_set()
         self.withdraw()
 
+    def open_update_t_work_hours(self):
+        window = UpdateTeacherWorkTime(self)
+        window.grab_set()
+        self.withdraw()
 
     def refresh(self):
         for item in self.table.get_children():
