@@ -50,8 +50,8 @@ class SignUpTeacher(tkinter.Toplevel):
         arr = ["sign_up_teacher", self.entry_fname.get(), self.entry_lname.get(), self.entry_email.get(), self.entry_password.get(), self.entry_phonenumber.get(), self.entry_id.get(), self.entry_price.get(), self.entry_experience.get()]
         str_insert = ",".join(arr)
         print(str_insert)
-        self.parent.client_socket.send(str_insert.encode())
-        data = self.parent.client_socket.recv(1024).decode()
+        self.parent.send_msg(str_insert, self.parent.client_socket)
+        data = self.parent.recv_msg(self.parent.client_socket)
         print(data)
         if data == "success Sign up teacher":
             messagebox.showinfo("showinfo", "your details have been successfully registered as a teacher")

@@ -7,6 +7,8 @@ from sign_up_as_teacher import SignUpTeacher
 from sign_up_as_student import SignupStudent
 from PIL import ImageTk, Image
 
+SIZE = 12
+
 
 class OpeningScreen(tkinter.Tk):
     def __init__(self):
@@ -54,11 +56,44 @@ class OpeningScreen(tkinter.Tk):
 
     def create_socket(self):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client_socket.connect(('10.20.4.7', 1802))
+        self.client_socket.connect(('127.0.0.1', 1802))
         data = self.client_socket.recv(1024).decode()
         print("data"+data)
         print("hi", self.client_socket)
 
+    def send_msg(self, data, client_socket):
+        try:
+            print("message: " + str(data))
+            length = str(len(data)).zfill(SIZE)
+            length = length.encode('utf-8')
+            print(length)
+            if type(data) != bytes:
+                data = data.encode()
+            print(data)
+            msg = length + data
+            print("message with length: " + str(msg))
+            client_socket.send(msg)
+        except:
+            print("error with sending message")
+
+    def recv_msg(self, client_socket, ret_type="string"):
+        try:
+            length = client_socket.recv(SIZE).decode('utf-8')
+            if not length:
+                print("no length")
+                return None
+            print("the length: " + length)
+            data = client_socket.recv(int(length))
+            if not data:
+                print("no data")
+                return None
+            print("the data: " + str(data))
+            if ret_type == "string":
+                data = data.decode('utf-8')
+            print(data)
+            return data
+        except:
+            print("error with receiving message")
 
     def exit(self):
         self.destroy()

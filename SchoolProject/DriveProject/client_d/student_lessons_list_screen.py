@@ -68,8 +68,8 @@ class StudentLessonsList(tkinter.Toplevel):
         arr = ["student_lessons_list", self.parent.id_s]
         str1 = arr[0] + "," + (arr[1])
         print(str1)
-        self.parent.parent.client_socket.send(str1.encode())
-        data = self.parent.parent.client_socket.recv(1024).decode()
+        self.parent.parent.send_msg(str1, self.parent.parent.client_socket)
+        data = self.parent.parent.recv_msg(self.parent.parent.client_socket)
         print(data)
         arr_data = data.split("-")
         print(arr_data)
@@ -80,8 +80,8 @@ class StudentLessonsList(tkinter.Toplevel):
             print(teacher_id)
             arr2 = ["teacher_id_to_name", teacher_id]
             str2 = arr2[0] + "," + arr2[1]
-            self.parent.parent.client_socket.send(str2.encode())
-            teacher_name = self.parent.parent.client_socket.recv(1024).decode()
+            self.parent.parent.send_msg(str2, self.parent.parent.client_socket)
+            teacher_name = self.parent.parent.recv_msg(self.parent.parent.client_socket)
             print("teacher name: " + teacher_name)
             line1 = item.split(",")
             self.table.insert("", 'end', text="1", values=(line1[0], teacher_name, line1[3], line1[4], line1[5]))
@@ -119,7 +119,7 @@ class StudentLessonsList(tkinter.Toplevel):
         window.grab_set()
         self.withdraw()
 
-    def open_chat_teacher(self):
+    def open_chat_student(self):
         window = ChatStudent(self)
         window.grab_set()
         self.withdraw()
@@ -136,8 +136,8 @@ class StudentLessonsList(tkinter.Toplevel):
         print(arr)
         str1 = arr[0] + "," + str(arr[1])
         print(str1)
-        self.parent.parent.client_socket.send(str1.encode())
-        data = self.parent.parent.client_socket.recv(1024).decode()  # recived success or failed
+        self.parent.parent.send_msg(str1, self.parent.parent.client_socket)
+        data = self.parent.parent.recv_msg(self.parent.parent.client_socket)  # recived success or failed
         print(data)
         if data == "succeed to delete lesson":
             messagebox.showinfo("showinfo", "you deleted lesson successfully")

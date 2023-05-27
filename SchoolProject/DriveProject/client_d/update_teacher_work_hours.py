@@ -58,8 +58,8 @@ class UpdateTeacherWorkTime(tkinter.Toplevel):
         print(self.days_checked)
         str_days_checked = ",".join(self.days_checked)
         print(str_days_checked)
-        self.parent.parent.parent.client_socket.send(str_days_checked.encode())
-        data = self.parent.parent.parent.client_socket.recv(1024).decode()
+        self.parent.parent.parent.send_msg(str_days_checked, self.parent.parent.parent.client_socket)
+        data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
         if data == "succeed to update teacher's days":
             messagebox.showinfo("showinfo", "succeed to update teacher's days")
             self.close()

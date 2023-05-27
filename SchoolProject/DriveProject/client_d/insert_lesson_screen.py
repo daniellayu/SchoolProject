@@ -58,8 +58,8 @@ class InsertLesson(tkinter.Toplevel):
         arr = ["insert_lesson", self.parent.parent.id_s, self.cal.get_date(), self.entry_time.get(), self.entry_price.get()]
         str_insert = ",".join(arr)
         print(str_insert)
-        self.parent.parent.parent.client_socket.send(str_insert.encode())
-        data = self.parent.parent.parent.client_socket.recv(1024).decode()
+        self.parent.parent.parent.send_msg(str_insert, self.parent.parent.parent.client_socket)
+        data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
         if data == "succeed to insert lesson":
             messagebox.showinfo("showinfo", "succeed to insert lesson")
         elif data == "failed to insert lesson":

@@ -33,8 +33,8 @@ class StudentsList(tkinter.Toplevel):
         arr = ["students_list", self.parent.parent.id_t]
         str1 = arr[0]+","+(arr[1])
         print(str1)
-        self.parent.parent.parent.client_socket.send(str1.encode())
-        data = self.parent.parent.parent.client_socket.recv(1024).decode()
+        self.parent.parent.parent.send_msg(str1, self.parent.parent.parent.client_socket)
+        data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
         print(data)
         arr_data = data.split("-")
         print(arr_data)

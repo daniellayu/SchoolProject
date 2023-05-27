@@ -45,8 +45,8 @@ class ChooseTeacher(tkinter.Toplevel):
         print(arr)
         str1 = arr[0]+","+str(arr[1])+","+arr[2]
         print(str1)
-        self.parent.parent.parent.client_socket.send(str1.encode())
-        data = self.parent.parent.parent.client_socket.recv(1024).decode()  # recived success or failed
+        self.parent.parent.parent.send_msg(str1, self.parent.parent.parent.client_socket)
+        data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)  # recived success or failed
         print(data)
         if data == "success update teacher id":
             messagebox.showinfo("showinfo", "you signed to " + self.table.item(curItem)['values'][1] + self.table.item(curItem)['values'][2])
@@ -59,8 +59,8 @@ class ChooseTeacher(tkinter.Toplevel):
         arr = ["teachers_list"]
         str = ",".join(arr)
         print(str)
-        self.parent.parent.parent.client_socket.send(str.encode())
-        data = self.parent.parent.parent.client_socket.recv(1024).decode()
+        self.parent.parent.parent.send_msg(str, self.parent.parent.parent.client_socket)
+        data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
         print(data)
         arr_data = data.split("-")
         print(arr_data)

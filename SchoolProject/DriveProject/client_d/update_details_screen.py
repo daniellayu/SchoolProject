@@ -7,7 +7,7 @@ class UpdateDetails(tkinter.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.geometry('300x300')
+        self.geometry('400x400')
         self.title('Update Details Screen')
         # Label(self, text="first name:").place(x=40, y=75)
         # self.entry_fname = Entry(self)
@@ -31,8 +31,8 @@ class UpdateDetails(tkinter.Toplevel):
         #print(str1)
         str_update = ",".join(arr)
         print(str_update)
-        self.parent.parent.parent.client_socket.send(str_update.encode())
-        data = self.parent.parent.parent.client_socket.recv(1024).decode()#recived success or failed
+        self.parent.parent.parent.send_msg(str_update, self.parent.parent.parent.client_socket)
+        data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
         print(data)
         if data == "success update details":
             messagebox.showinfo("showinfo", "your details have been successfully updated")

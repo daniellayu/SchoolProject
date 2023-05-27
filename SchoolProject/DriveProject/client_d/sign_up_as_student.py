@@ -45,8 +45,8 @@ class SignupStudent(tkinter.Toplevel):
                self.entry_password.get(), self.entry_phonenumber.get(), self.entry_id.get()]
         str_insert = ",".join(arr)
         print(str_insert)
-        self.parent.client_socket.send(str_insert.encode())
-        data = self.parent.client_socket.recv(1024).decode()
+        self.parent.send_msg(str_insert, self.parent.client_socket)
+        data = self.parent.recv_msg(self.parent.client_socket)
         print(data)
         if data == "success Sign up student":
             messagebox.showinfo("showinfo", "your details have been successfully registered as a student")

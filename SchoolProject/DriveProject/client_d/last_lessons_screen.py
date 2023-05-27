@@ -31,8 +31,8 @@ class LastLessons(tkinter.Toplevel):
         arr = ["lessons_list", self.parent.parent.id_t]
         str1 = arr[0] + "," + (arr[1])
         print(str1)
-        self.parent.parent.parent.client_socket.send(str1.encode())
-        data = self.parent.parent.parent.client_socket.recv(1024).decode()
+        self.parent.parent.parent.send_msg(str1, self.parent.parent.parent.client_socket)
+        data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
         print(data)
         arr_data = data.split("-")
         print(arr_data)
@@ -43,8 +43,8 @@ class LastLessons(tkinter.Toplevel):
             print(student_id)
             arr2 = ["student_id_to_name", student_id]
             str2 = arr2[0] + "," + arr2[1]
-            self.parent.parent.parent.client_socket.send(str2.encode())
-            student_name = self.parent.parent.parent.client_socket.recv(1024).decode()
+            self.parent.parent.parent.send_msg(str2, self.parent.parent.parent.client_socket)
+            student_name = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
             print("student name: " + student_name)
 
             date = line1[3].split("/")

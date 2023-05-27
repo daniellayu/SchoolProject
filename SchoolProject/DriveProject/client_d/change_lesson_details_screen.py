@@ -55,8 +55,8 @@ class ChangeLessonDetails(tkinter.Toplevel):
 
         str_change = ",".join(arr)
         print(str_change)
-        self.parent.parent.parent.client_socket.send(str_change.encode())
-        data = self.parent.parent.parent.client_socket.recv(1024).decode()  # recived success or failed
+        self.parent.parent.parent.send_msg(str_change, self.parent.parent.parent.client_socket)
+        data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)  # recived success or failed
         print(data)
         if data == "succeed to change lesson details":
             messagebox.showinfo("showinfo", "your details have been successfully updated")
