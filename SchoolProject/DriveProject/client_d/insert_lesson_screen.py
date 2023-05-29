@@ -36,7 +36,7 @@ class InsertLesson(tkinter.Toplevel):
         self.btn_insert = Button(self, text="insert", bg="pink", command=self.insert_lesson)
         self.btn_insert.place(x=500, y=300)
 
-        self.btn_close = Button(self, text="close", bg="red", command=self.close)
+        self.btn_close = Button(self, text="go back", bg="red", command=self.close)
         self.btn_close.place(x=600, y=370)
 
     def grad_date(self):

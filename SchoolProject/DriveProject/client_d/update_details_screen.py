@@ -14,12 +14,12 @@ class UpdateDetails(tkinter.Toplevel):
         # self.entry_fname.place(x=125, y=75)
         Label(self, text="price:").place(x=40, y=125)
         self.entry_price = Entry(self)
-        self.entry_price.place(x=125, y=125)
+        self.entry_price.place(x=150, y=125)
         Label(self, text="years of experience:").place(x=40, y=175)
         self.entry_experience = Entry(self)
-        self.entry_experience.place(x=125, y=175)
+        self.entry_experience.place(x=150, y=175)
         self.btn_update = Button(self, text="update", background="pink", command=self.update).place(x=110, y=225)
-        self.btn_close = Button(self, text="close", background="red", command=self.close).place(x=110, y=275)
+        self.btn_close = Button(self, text="go back", background="red", command=self.close).place(x=110, y=275)
 
 
     def update(self):

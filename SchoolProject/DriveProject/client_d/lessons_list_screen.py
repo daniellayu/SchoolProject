@@ -2,7 +2,7 @@ import tkinter
 from tkinter import *
 from tkinter import ttk, messagebox
 from last_lessons_screen import LastLessons
-from change_lesson_details_screen import ChangeLessonDetails
+from t_change_lesson_details_screen import TChangeLessonDetails
 from students_list_screen import StudentsList
 from update_details_screen import UpdateDetails
 from chat_teacher import ChatTeacher
@@ -74,7 +74,7 @@ class LessonsList(tkinter.Toplevel):
         self.btn_change = Button(self, text="change lesson details", command=self.change_lesson_details)
         self.btn_change.place(x=400, y=300)
 
-        self.btn_close = Button(self, text="Close", background="red", command=self.close)
+        self.btn_close = Button(self, text="go back", background="red", command=self.close)
         self.btn_close.place(x=650, y=370)
 
 
@@ -176,7 +176,7 @@ class LessonsList(tkinter.Toplevel):
 
 
     def change_lesson_details(self):
-        window = ChangeLessonDetails(self)
+        window = TChangeLessonDetails(self)
         window.grab_set()
         self.withdraw()
 

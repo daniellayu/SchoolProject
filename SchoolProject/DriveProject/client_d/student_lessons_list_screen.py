@@ -1,10 +1,10 @@
 import tkinter
 from tkinter import *
 from tkinter import ttk, messagebox
-from last_lessons_screen import LastLessons
-from change_lesson_details_screen import ChangeLessonDetails
+from s_change_lesson_details_screen import SChangeLessonDetails
 from choose_teacher_screen import ChooseTeacher
 from insert_lesson_screen import InsertLesson
+from student_last_lessons_screen import StudentLastLessons
 from chat_student import ChatStudent
 from PIL import ImageTk, Image
 
@@ -50,7 +50,7 @@ class StudentLessonsList(tkinter.Toplevel):
         self.img2 = Image.open('C://Users//danie//OneDrive//שולחן העבודה//python img//chat.png')
         self.resized2 = self.img2.resize((40, 40), Image.Resampling.LANCZOS)
         self.img_chat = ImageTk.PhotoImage(self.resized2)
-        self.btn_chat = Button(self, text="chat", command=self.open_chat_teacher, font=('Helvetica bold', 12),
+        self.btn_chat = Button(self, text="chat", command=self.open_chat_student, font=('Helvetica bold', 12),
                                image=self.img_chat)
         self.btn_chat.place(x=50, y=350)
 
@@ -60,7 +60,7 @@ class StudentLessonsList(tkinter.Toplevel):
         self.btn_change = Button(self, text="change lesson details", command=self.change_lesson_details)
         self.btn_change.place(x=400, y=300)
 
-        self.btn_close = Button(self, text="Close", background="red", command=self.close)
+        self.btn_close = Button(self, text="go back", background="red", command=self.close)
         self.btn_close.place(x=650, y=370)
 
 
@@ -103,7 +103,7 @@ class StudentLessonsList(tkinter.Toplevel):
 
 
     def open_last_lessons(self):
-        window = LastLessons(self)
+        window = StudentLastLessons(self)
         window.grab_set()
         self.withdraw()
 
@@ -147,7 +147,7 @@ class StudentLessonsList(tkinter.Toplevel):
 
 
     def change_lesson_details(self):
-        window = ChangeLessonDetails(self)
+        window = SChangeLessonDetails(self)
         window.grab_set()
         self.withdraw()
 

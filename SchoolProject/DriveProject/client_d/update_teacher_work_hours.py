@@ -6,7 +6,7 @@ class UpdateTeacherWorkTime(tkinter.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.geometry('600x400')
+        self.geometry('600x500')
         self.title('Update Teacher Work Time')
 
         self.check_var1 = IntVar()
@@ -38,7 +38,7 @@ class UpdateTeacherWorkTime(tkinter.Toplevel):
         self.btn_submit = Button(self, text="submit", command=self.get_checked_days)
         self.btn_submit.place(x=250, y=400)
 
-        self.btn_close = Button(self, text="close", bg="red", command=self.close)
+        self.btn_close = Button(self, text="go back", bg="red", command=self.close)
         self.btn_close.place(x=550, y=400)
 
     def get_checked_days(self):

@@ -10,7 +10,7 @@ class SignUpTeacher(tkinter.Toplevel):
         super().__init__(parent)
         self.parent = parent
         self.teacherDb = TeacherDb()
-        self.geometry('500x500')
+        self.geometry('400x500')
         self.title('Sign up as teacher')
         Label(self, text="SIGN Up Teacher", background="light blue").place(x=150, y=30)
         Label(self, text="first name:").place(x=50, y=60)

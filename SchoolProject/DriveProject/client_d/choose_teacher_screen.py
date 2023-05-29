@@ -32,7 +32,7 @@ class ChooseTeacher(tkinter.Toplevel):
         self.table.bind('<Button-1>', self.selectItem)
         self.table.place(x=45, y=100)
         self.listbox()
-        self.btn_close = Button(self, text="Close", background="red", command=self.close)
+        self.btn_close = Button(self, text="go back", background="red", command=self.close)
         self.btn_close.place(x=750, y=370)
 
     def selectItem(self, event):

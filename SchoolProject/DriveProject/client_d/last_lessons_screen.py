@@ -24,7 +24,7 @@ class LastLessons(tkinter.Toplevel):
         self.table.heading("#5", text="price")
         self.table.place(x=150, y=100)
         self.listbox()
-        self.btn_close = Button(self, text="Close", background="red", command=self.close)
+        self.btn_close = Button(self, text="go back", background="red", command=self.close)
         self.btn_close.place(x=650, y=370)
 
     def listbox(self):
