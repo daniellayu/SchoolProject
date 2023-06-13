@@ -1,7 +1,7 @@
 import sqlite3
 
 class TeacherDb(object):
-    def __init__(self, tablename="teacherDb", teacherId="teacherId", firstname="firstname", lastname="lastname", email="email", phonenumber="phonenumber", Id="Id", password="password", price="price", experience="experience", days="days"):
+    def __init__(self, tablename="teacherDb", teacherId="teacherId", firstname="firstname", lastname="lastname", email="email", phonenumber="phonenumber", Id="Id", password="password", price="price", experience="experience", days="days", hours="hours"):
         self.__tablename = tablename
         self.__teacherId = teacherId #auto increment
         self.__firstname = firstname
@@ -13,6 +13,7 @@ class TeacherDb(object):
         self.__price = price
         self.__experience = experience
         self.__days = days
+        self.__hours = hours
         self.create_table()
 
 
@@ -31,7 +32,8 @@ class TeacherDb(object):
                         {self.__Id} INTEGER NOT NULL,
                         {self.__price} INTEGER NOT NULL,
                         {self.__experience} INTEGER NOT NULL,
-                        {self.__days} TEXT NOT NULL
+                        {self.__days} TEXT NOT NULL,
+                        {self.__hours} TEXT NOT NULL
                     );
                             """
             cursor.execute(create_table_query)
@@ -102,16 +104,17 @@ class TeacherDb(object):
             return False
 
     def is_exist(self, id, password):
-        conn = sqlite3.connect('database.db')
-        print("Opened database successfully")
-        str_check = "SELECT * from " + self.__tablename + " where " + self.__Id + " = '" +id +"' and " +self.__password+" = '"+str(password)+"'"
-        print(str_check)
-        cursor = conn.execute(str_check)
-        row = cursor.fetchall()
-        if row:
-            print("teacher exist")
-            return True
-        else:
+        try:
+            conn = sqlite3.connect('database.db')
+            print("Opened database successfully")
+            str_check = "SELECT * from " + self.__tablename + " where " + self.__Id + " = '" +id +"' and " +self.__password+" = '"+str(password)+"'"
+            print(str_check)
+            cursor = conn.execute(str_check)
+            row = cursor.fetchall()
+            if row:
+                print("teacher exist")
+                return True
+        except:
             print("teacher not exist")
             return False
 
@@ -188,11 +191,11 @@ class TeacherDb(object):
             return False
 
 
-    def get_teacher_days_by_Id(self, Id):
+    def get_teacher_days_by_Id(self, teacher_id):
         try:
             conn = sqlite3.connect('database.db')
             print("Opened database successfully")
-            str = f"SELECT {self.__days} from {self.__tablename} where {self.__Id} = '{Id}'"
+            str = f"SELECT {self.__days} from {self.__tablename} where {self.__teacherId} = '{teacher_id}'"
             print(str)
             cursor = conn.execute(str)
             row = cursor.fetchall()
@@ -204,6 +207,39 @@ class TeacherDb(object):
                 return False
         except:
             return "failed to get teacher's days"
+
+
+    def update_hours(self, teacher_id, hours):
+        try:
+            connection = sqlite3.connect("database.db")
+            cursor = connection.cursor()
+            update_query = f"UPDATE {self.__tablename} SET {self.__hours} = ? WHERE {self.__teacherId} = ?"
+            print(update_query)
+            cursor.execute(update_query, (hours, teacher_id))
+            connection.commit()
+            connection.close()
+            print("succeed to update teacher's hours")
+            return True
+        except:
+            print("failed to update teacher's hours")
+            return False
+
+    def get_teacher_hours_by_Id(self, teacher_id):
+        try:
+            conn = sqlite3.connect('database.db')
+            print("Opened database successfully")
+            str = f"SELECT {self.__hours} from {self.__tablename} where {self.__teacherId} = '{teacher_id}'"
+            print(str)
+            cursor = conn.execute(str)
+            row = cursor.fetchall()
+            if row:
+                print(row[0][0])
+                return row[0][0]
+            else:
+                print("teacher not found")
+                return False
+        except:
+            return "failed to get teacher's hours"
 
 
 #t = TeacherDb()

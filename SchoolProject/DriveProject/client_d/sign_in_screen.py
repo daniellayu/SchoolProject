@@ -56,6 +56,8 @@ class SignInScreen(tkinter.Toplevel):
             messagebox.showerror("error", "please write id and password")
             return
         print("sign in", self.radio.get())
+        if self.radio.get() == 0:
+            messagebox.showerror("error", "please choose if you tea")
         if self.radio.get() == 1:
             arr = ["sign_in_teacher", self.entry_id.get(), self.entry_password.get()]
             str_insert = ",".join(arr)

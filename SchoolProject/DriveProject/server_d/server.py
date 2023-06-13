@@ -3,6 +3,8 @@ import threading
 from teacherdb import TeacherDb
 from studentdb import StudentDb
 from lessonsdb import LessonsDb
+from messagesdb_s import MessagesDb_Students
+from messagesdb_t import MessagesDb
 
 SIZE = 12
 
@@ -16,6 +18,8 @@ class Server(object):
         self.teacherdb = TeacherDb()
         self.studentdb = StudentDb()
         self.lessonsdb = LessonsDb()
+        self.messagesdb_s = MessagesDb_Students()
+        self.messagesdb_t = MessagesDb()
 
     def start(self):
         try:
@@ -74,9 +78,9 @@ class Server(object):
             elif arr and len(arr) == 3 and arr[0] == "sign_in_student":
                 server_data = self.studentdb.is_exist(arr[1], arr[2])
                 print("Server data: ", server_data)
-                if server_data:
+                if server_data == True:
                     self.send_msg("success Sign in", client_socket)
-                elif server_data:
+                if server_data == False:
                     self.send_msg("failed Sign in", client_socket)
 
             elif arr and len(arr) == 2 and arr[0] == "students_list":
@@ -186,6 +190,57 @@ class Server(object):
                     self.send_msg("succeed to update teacher's days", client_socket)
                 elif server_data:
                     self.send_msg("failed to update teacher's days", client_socket)
+
+            elif arr and len(arr) == 2 and arr[0] == "get_t_work_days":
+                student_id = self.studentdb.get_student_id_by_id(arr[1])
+                print(student_id)
+                teacher_id = self.studentdb.get_teacher_id_by_student_id(student_id)
+                print(teacher_id)
+                server_data = self.teacherdb.get_teacher_days_by_Id(teacher_id)
+                print("server date" + server_data)
+                self.send_msg(server_data, client_socket)
+
+            elif arr and arr[0] == "update_t_work_hours":
+                teacher_id = self.teacherdb.get_teacher_id_by_id(arr[1])
+                print(teacher_id)
+                hours = ",".join(arr[2:])
+                print(hours)
+                server_data = self.teacherdb.update_hours(teacher_id, hours)
+                print(server_data)
+                if server_data:
+                    self.send_msg("succeed to update teacher's hours", client_socket)
+                elif server_data:
+                    self.send_msg("failed to update teacher's hours", client_socket)
+
+            elif arr and len(arr) == 2 and arr[0] == "get_t_work_hours":
+                student_id = self.studentdb.get_student_id_by_id(arr[1])
+                print(student_id)
+                teacher_id = self.studentdb.get_teacher_id_by_student_id(student_id)
+                print(teacher_id)
+                server_data = self.teacherdb.get_teacher_hours_by_Id(teacher_id)
+                print("server date" + server_data)
+                self.send_msg(server_data, client_socket)
+
+            elif arr and len(arr) == 4 and arr[0] == "send_msg_for_teacher":
+                student_id = self.studentdb.get_student_id_by_id(arr[1])
+                print(student_id)
+                teacher_id = self.studentdb.get_teacher_id_by_student_id(student_id)
+                print(teacher_id)
+                server_data = self.messagesdb_t.insert(student_id, teacher_id, arr[2], arr[3])
+                print(server_data)
+                self.send_msg("message successfully sent", client_socket)
+
+            elif arr and len(arr) == 5 and arr[0] == "send_msg_for_student":
+                student_id = self.studentdb.get_student_id_by_name(arr[2])
+                print(student_id)
+                teacher_id = self.teacherdb.get_teacher_id_by_id(arr[1])
+                print(teacher_id)
+                server_data = self.messagesdb_s.insert(teacher_id, student_id, arr[3], arr[4])
+                print(server_data)
+                self.send_msg("message successfully sent", client_socket)
+
+
+
 
 
             # elif arr and len(arr) == 2 and arr[0] == "lessons_list_for_delete":

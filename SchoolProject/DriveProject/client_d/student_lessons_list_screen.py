@@ -141,7 +141,12 @@ class StudentLessonsList(tkinter.Toplevel):
         print(data)
         if data == "succeed to delete lesson":
             messagebox.showinfo("showinfo", "you deleted lesson successfully")
-            self.close()
+            arr2 = ["send_msg_for_teacher", self.parent.parent.id_s, self.cal.get_date(),
+                    "lesson's details have changed"]
+            str2 = ",".join(arr2)
+            self.parent.parent.parent.send_msg(str2, self.parent.parent.parent.client_socket)
+            data2 = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
+            print(data2)
         if data == "failed to delete lesson":
             messagebox.showerror("error", "error")
 

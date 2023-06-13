@@ -11,29 +11,39 @@ class SignupStudent(tkinter.Toplevel):
         super().__init__(parent)
         self.parent = parent
         self.studentDb = StudentDb()
-        self.geometry('400x500')
+        self.geometry('500x500')
         self.title('Sign up as student')
-        Label(self, text="SIGN UP STUDENT", background="light blue").place(x=150, y=55)
-        Label(self, text="first name").place(x=75, y=100)
-        self.entry_fname = Entry(self)
-        self.entry_fname.place(x=175, y=100)
-        Label(self, text="last name").place(x=75, y=125)
-        self.entry_lname = Entry(self)
-        self.entry_lname.place(x=175, y=125)
-        Label(self, text="email").place(x=75, y=150)
-        self.entry_email = Entry(self)
-        self.entry_email.place(x=175, y=150)
-        Label(self, text="password").place(x=75, y=175)
-        self.entry_password = Entry(self)
-        self.entry_password.place(x=175, y=175)
-        Label(self, text="phone number").place(x=75, y=200)
-        self.entry_phonenumber = Entry(self)
-        self.entry_phonenumber.place(x=175, y=200)
-        Label(self, text="ID").place(x=75, y=225)
-        self.entry_id = Entry(self)
-        self.entry_id.place(x=175, y=225)
-        self.btn_signup = Button(self, text="Sign up", background="purple", command=self.sign_up_student).place(x=150, y=300)
-        self.btn_close = Button(self, text="close", background="red", command=self.close).place(x=150, y=350)
+
+        Label(self, text="SIGN UP STUDENT", fg="#57a1f8", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=125, y=30)
+
+        Label(self, text="first name:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=100)
+        self.entry_fname = Entry(self, width=25, fg='black', font=('Microsoft YaHei UI Light', 11))
+        self.entry_fname.place(x=200, y=100)
+
+        Label(self, text="last name:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=150)
+        self.entry_lname = Entry(self, width=25, fg='black', font=('Microsoft YaHei UI Light', 11))
+        self.entry_lname.place(x=200, y=150)
+
+        Label(self, text="email:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=200)
+        self.entry_email = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_email.place(x=200, y=200)
+
+        Label(self, text="password:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=250)
+        self.entry_password = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_password.place(x=200, y=250)
+
+        Label(self, text="phone number:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=300)
+        self.entry_phonenumber = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_phonenumber.place(x=200, y=300)
+
+        Label(self, text="ID:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=350)
+        self.entry_id = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_id.place(x=200, y=350)
+
+        self.btn_signup = Button(self, text="Sign up", fg='white', bg='#57a1f8',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.sign_up_student).place(x=185, y=400)
+
+        self.btn_close = Button(self, text="go back", background="red", command=self.close).place(x=370, y=470)
 
     def sign_up_student(self):
         print(self.entry_id.get())

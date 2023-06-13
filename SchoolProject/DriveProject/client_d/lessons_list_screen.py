@@ -119,10 +119,13 @@ class LessonsList(tkinter.Toplevel):
         self.x = self.table.item(curItem)['values']
         self.lesson_id = self.x[0]
         print(self.lesson_id)
+        self.student_name = self.x[1]
+        print(self.student_name)
         self.date = self.x[2]
         print(self.date)
         self.time = self.x[3]
         print(self.time)
+
 
 
 
@@ -170,7 +173,14 @@ class LessonsList(tkinter.Toplevel):
         print(data)
         if data == "succeed to delete lesson":
             messagebox.showinfo("showinfo", "you deleted lesson successfully")
-            self.close()
+            student_fname = self.parent.student_name.spilt()[0]
+            print(student_fname)
+            arr2 = ["send_msg_for_student", self.parent.parent.id_t, student_fname, self.cal.get_date(),
+                    "lesson's details have changed"]
+            str2 = ",".join(arr2)
+            self.parent.parent.parent.send_msg(str2, self.parent.parent.parent.client_socket)
+            data2 = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
+            print(data2)
         if data == "failed to delete lesson":
             messagebox.showerror("error", "error")
 

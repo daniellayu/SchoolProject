@@ -11,6 +11,8 @@ class TChangeLessonDetails(tkinter.Toplevel):
         super().__init__(parent)
         self.parent = parent
         #print(self.parent.parent.parent.id_t)
+        self.student_name = self.parent.student_name
+        print(self.student_name)
         self.date = self.parent.date
         print(self.date)
         self.time = self.parent.time
@@ -60,7 +62,15 @@ class TChangeLessonDetails(tkinter.Toplevel):
         print(data)
         if data == "succeed to change lesson details":
             messagebox.showinfo("showinfo", "your details have been successfully updated")
-            #self.open_teacher_lessons_screen()
+            print(self.student_name)
+            arr_student_name = self.student_name.spilt(" ")
+            student_fname = arr_student_name[0]
+            print(student_fname)
+            arr2 = ["send_msg_for_student", self.parent.parent.id_t, student_fname, self.cal.get_date(), "lesson's details have changed"]
+            str2 = ",".join(arr2)
+            self.parent.parent.parent.send_msg(str2, self.parent.parent.parent.client_socket)
+            data2 = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
+            print(data2)
         if data == "failed to change lesson details":
             messagebox.showerror("error", "try again")
 

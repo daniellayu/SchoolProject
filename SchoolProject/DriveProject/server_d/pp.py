@@ -1,30 +1,38 @@
+# Import the tkinter module
 import tkinter
-from tkinter import *
-from tkinter import ttk, messagebox
 
-class UpdateDetails(tkinter.Tk):
-    def __init__(self):
-        super().__init__()
-        self.geometry('400x400')
-        self.title('Update Details Screen')
-        # Label(self, text="first name:").place(x=40, y=75)
-        # self.entry_fname = Entry(self)
-        # self.entry_fname.place(x=125, y=75)
-        Label(self, text="Update my details", fg="blue", font=15).place(x=125, y=50)
-        Label(self, text="price:").place(x=40, y=125)
-        self.entry_price = Entry(self)
-        self.entry_price.place(x=125, y=125)
-        Label(self, text="years of experience:").place(x=40, y=175)
-        self.entry_experience = Entry(self)
-        self.entry_experience.place(x=125, y=175)
-        self.btn_update = Button(self, text="update", background="pink", command=self.update).place(x=110, y=225)
-        #self.btn_close = Button(self, text="close", background="red", command=self.close).place(x=110, y=275)
+# Create the default window
+root = tkinter.Tk()
+root.title("Welcome to GeeksForGeeks")
+root.geometry('700x500')
 
+# Create the list of options
+options_list = ["Option 1", "Option 2", "Option 3", "Option 4"]
 
+# Variable to keep track of the option
+# selected in OptionMenu
+value_inside = tkinter.StringVar(root)
 
+# Set the default value of the variable
+value_inside.set("Select an Option")
 
+# Create the optionmenu widget and passing
+# the options_list and value_inside to it.
+question_menu = tkinter.OptionMenu(root, value_inside, *options_list)
+question_menu.pack()
+
+# Function to print the submitted option-- testing purpose
 
 
-if __name__ == "__main__":
-    o = UpdateDetails()
-    o.mainloop()
+def print_answers():
+	print("Selected Option: {}".format(value_inside.get()))
+	return None
+
+
+# Submit button
+# Whenever we click the submit button, our submitted
+# option is printed ---Testing purpose
+submit_button = tkinter.Button(root, text='Submit', command=print_answers)
+submit_button.pack()
+
+root.mainloop()

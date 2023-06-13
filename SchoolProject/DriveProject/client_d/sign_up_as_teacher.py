@@ -10,35 +10,47 @@ class SignUpTeacher(tkinter.Toplevel):
         super().__init__(parent)
         self.parent = parent
         self.teacherDb = TeacherDb()
-        self.geometry('400x500')
+        self.geometry('500x500')
         self.title('Sign up as teacher')
-        Label(self, text="SIGN Up Teacher", background="light blue").place(x=150, y=30)
-        Label(self, text="first name:").place(x=50, y=60)
-        self.entry_fname = Entry(self)
-        self.entry_fname.place(x=50, y=80)
-        Label(self, text="last name:").place(x=50, y=110)
-        self.entry_lname = Entry(self)
-        self.entry_lname.place(x=50, y=130)
-        Label(self, text="email:").place(x=50, y=160)
-        self.entry_email = Entry(self)
-        self.entry_email.place(x=50, y=180)
-        Label(self, text="password:").place(x=50, y=210)
-        self.entry_password = Entry(self)
-        self.entry_password.place(x=50, y=230)
-        Label(self, text="phone number:").place(x=50, y=260)
-        self.entry_phonenumber = Entry(self)
-        self.entry_phonenumber.place(x=50, y=280)
-        Label(self, text="ID").place(x=50, y=310)
-        self.entry_id = Entry(self)
-        self.entry_id.place(x=50, y=330)
-        Label(self, text="price:").place(x=50, y=360)
-        self.entry_price = Entry(self)
-        self.entry_price.place(x=50, y=380)
-        Label(self, text="experience:").place(x=50, y=410)
-        self.entry_experience = Entry(self)
-        self.entry_experience.place(x=50, y=430)
-        self.btn_signup = Button(self, text="Sign up", background="purple", command=self.sign_up_teacher).place(x=100, y=470)
-        self.btn_close = Button(self, text="close", background="red", command=self.close).place(x=150, y=470)
+
+        Label(self, text="SIGN UP TEACHER", fg="#57a1f8", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=120, y=20)
+
+        Label(self, text="first name:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=100)
+        self.entry_fname = Entry(self, width=25, fg='black', font=('Microsoft YaHei UI Light', 11))
+        self.entry_fname.place(x=200, y=100)
+
+        Label(self, text="last name:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=150)
+        self.entry_lname = Entry(self, width=25, fg='black', font=('Microsoft YaHei UI Light', 11))
+        self.entry_lname.place(x=200, y=150)
+
+        Label(self, text="email:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=200)
+        self.entry_email = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_email.place(x=200, y=200)
+
+        Label(self, text="password:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=250)
+        self.entry_password = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_password.place(x=200, y=250)
+
+        Label(self, text="phone number:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=300)
+        self.entry_phonenumber = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_phonenumber.place(x=200, y=300)
+
+        Label(self, text="ID:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=350)
+        self.entry_id = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_id.place(x=200, y=350)
+
+        Label(self, text="price:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=400)
+        self.entry_price = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_price.place(x=200, y=400)
+
+        Label(self, text="experience:", fg="black", font=('Microsoft YaHei UI Light', 11, 'bold')).place(x=75, y=450)
+        self.entry_experience = Entry(self, width=25, fg="black", font=('Microsoft YaHei UI Light', 11))
+        self.entry_experience.place(x=200, y=450)
+
+        self.btn_signup = Button(self, text="Sign up", fg='white', bg='#57a1f8',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.sign_up_teacher()).place(x=185, y=480)
+
+        self.btn_close = Button(self, text="go back", background="red", command=self.close).place(x=370, y=470)
 
 
     def sign_up_teacher(self):

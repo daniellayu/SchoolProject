@@ -203,6 +203,30 @@ class StudentDb(object):
             return "failed to get teacher id by student id"
 
 
+
+    def get_student_id_by_name(self, student_name):
+        try:
+            connection = sqlite3.connect("database.db")
+            cursor = connection.cursor()
+            select_query = f"SELECT {self.__studentId} FROM {self.__tablename} " \
+                           f"WHERE {self.__firstname} = ?"
+            print(select_query)
+            cursor.execute(select_query, (student_name,))
+            result = cursor.fetchone()
+            connection.close()
+            if result is not None:
+                student_id = result[0]
+                print("Succeed to get student ID by name")
+                print(student_id)
+                return student_id
+            else:
+                print("Student not found")
+                return None
+        except:
+            print("Failed to get student ID by name")
+            return None
+
+
 #s = StudentDb()
 #s.insert("gaya", "tamari", "gaya@", "gaya12", "05224", "12")
 #x = s.get_all_students()
@@ -210,6 +234,7 @@ class StudentDb(object):
 #print(x)
 #s.delete_by_id(1)
 #s.update_teacher_id(2, 32456)
-#s.get_student_name_by_id(12)
+#s.get_student_name_by_id(2)
 #s.get_student_id_by_id(12)
 #s.get_teacher_id_by_student_id(2)
+#s.get_student_id_by_name("gaya")
