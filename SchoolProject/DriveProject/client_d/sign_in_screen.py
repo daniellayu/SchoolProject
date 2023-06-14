@@ -1,8 +1,6 @@
 import tkinter
 from tkinter import *
 from tkinter import ttk, messagebox
-from SchoolProject.DriveProject.server_d.teacherdb import TeacherDb
-from SchoolProject.DriveProject.server_d.studentdb import StudentDb
 import threading
 #from menu_teacher_screen import MenuTeacher
 #from menu_student_screen import MenuStudent
@@ -16,8 +14,6 @@ class SignInScreen(tkinter.Toplevel):
         self.parent = parent
         self.id_s = "0"
         self.id_t = "0"
-        self.teacherdb = TeacherDb()
-        self.studentdb = StudentDb()
         self.geometry('500x500+350+50')
         self.title('Signin')
         #self.config(bg="#57a1f8")

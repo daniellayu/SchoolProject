@@ -56,7 +56,7 @@ class OpeningScreen(tkinter.Tk):
 
     def create_socket(self):
         self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.client_socket.connect(('127.0.0.1', 1802))
+        self.client_socket.connect(('10.20.4.48', 1802))
         data = self.client_socket.recv(1024).decode()
         print("data"+data)
         print("hi", self.client_socket)
