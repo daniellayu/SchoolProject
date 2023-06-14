@@ -218,7 +218,7 @@ class Server(object):
                 teacher_id = self.studentdb.get_teacher_id_by_student_id(student_id)
                 print(teacher_id)
                 server_data = self.teacherdb.get_teacher_hours_by_Id(teacher_id)
-                print("server date" + server_data)
+                print(server_data)
                 self.send_msg(server_data, client_socket)
 
             elif arr and len(arr) == 4 and arr[0] == "send_msg_for_teacher":
@@ -239,6 +239,13 @@ class Server(object):
                 print(server_data)
                 self.send_msg("message successfully sent", client_socket)
 
+            elif arr and len(arr) == 2 and arr[0] == "check_id":
+                server_data = self.teacherdb.is_id_exist(arr[1])
+                print(server_data)
+                if server_data:
+                    self.send_msg("true", client_socket)
+                elif server_data:
+                    self.send_msg("false", client_socket)
 
 
 
@@ -298,7 +305,7 @@ class Server(object):
 
 
 if __name__ == '__main__':
-    ip = '127.0.0.1'
+    ip = '10.81.204.135'
     port = 1802
     s = Server(ip, port)
     s.start()

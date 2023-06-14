@@ -6,7 +6,7 @@ class UpdateTeacherWorkTime(tkinter.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.geometry('600x500')
+        self.geometry('600x500+350+50')
         self.title('Update Teacher Work Time')
 
         self.check_var1 = IntVar()
@@ -137,33 +137,33 @@ class UpdateTeacherWorkTime(tkinter.Toplevel):
     def get_checked_hours(self):
         self.hours_checked = ["update_t_work_hours", self.parent.parent.id_t]
         if self.check_var8.get() == 1:
-            self.days_checked.append("8:00")
+            self.hours_checked.append("8:00")
         if self.check_var9.get() == 1:
-            self.days_checked.append("9:00")
+            self.hours_checked.append("9:00")
         if self.check_var10.get() == 1:
-            self.days_checked.append("10:00")
+            self.hours_checked.append("10:00")
         if self.check_var11.get() == 1:
-            self.days_checked.append("11:00")
+            self.hours_checked.append("11:00")
         if self.check_var12.get() == 1:
-            self.days_checked.append("12:00")
+            self.hours_checked.append("12:00")
         if self.check_var13.get() == 1:
-            self.days_checked.append("13:00")
+            self.hours_checked.append("13:00")
         if self.check_var14.get() == 1:
-            self.days_checked.append("14:00")
+            self.hours_checked.append("14:00")
         if self.check_var15.get() == 1:
-            self.days_checked.append("15:00")
+            self.hours_checked.append("15:00")
         if self.check_var16.get() == 1:
-            self.days_checked.append("16:00")
+            self.hours_checked.append("16:00")
         if self.check_var17.get() == 1:
-            self.days_checked.append("17:00")
+            self.hours_checked.append("17:00")
         if self.check_var18.get() == 1:
-            self.days_checked.append("18:00")
+            self.hours_checked.append("18:00")
         if self.check_var19.get() == 1:
-            self.days_checked.append("19:00")
+            self.hours_checked.append("19:00")
         if self.check_var20.get() == 1:
-            self.days_checked.append("20:00")
+            self.hours_checked.append("20:00")
         print(self.hours_checked)
-        str_hours_checked = ",".join(self.hourss_checked)
+        str_hours_checked = ",".join(self.hours_checked)
         print(str_hours_checked)
         self.parent.parent.parent.send_msg(str_hours_checked, self.parent.parent.parent.client_socket)
         data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)

@@ -51,8 +51,8 @@ class TeacherDb(object):
             cursor = connection.cursor()
             insert_query = f"INSERT INTO {self.__tablename} ({self.__firstname}, {self.__lastname}," \
                            f" {self.__email}, {self.__password}, {self.__phonenumber}, {self.__Id}, {self.__price}," \
-                       f" {self.__experience}, {self.__days}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
-            cursor.execute(insert_query, (firstname, lastname, email, password, phonenumber, Id, price, experience, ""))
+                       f" {self.__experience}, {self.__days}, {self.__hours}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            cursor.execute(insert_query, (firstname, lastname, email, password, phonenumber, Id, price, experience, "", ""))
             connection.commit()#release db
             connection.close()
             print("succeed to insert teacher")
@@ -116,6 +116,22 @@ class TeacherDb(object):
                 return True
         except:
             print("teacher not exist")
+            return False
+
+
+    def is_id_exist(self, id):
+        try:
+            conn = sqlite3.connect('database.db')
+            print("Opened database successfully")
+            str_check = f"SELECT * from {self.__tablename} where {self.__Id} = {id}"
+            print(str_check)
+            cursor = conn.execute(str_check)
+            row = cursor.fetchall()
+            if row:
+                print("teacher already exists")
+                return True
+        except:
+            print("teacher doesn't exists")
             return False
 
 
@@ -254,4 +270,5 @@ class TeacherDb(object):
 #t.get_teacher_id_by_id(144)
 #t.update_days(1, "sunday")
 #t.get_teacher_days_by_Id(144)
+#t.is_id_exist(144567890)
 

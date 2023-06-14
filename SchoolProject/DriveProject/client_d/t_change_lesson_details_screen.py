@@ -21,7 +21,7 @@ class TChangeLessonDetails(tkinter.Toplevel):
         print(self.lesson_id)
         self.entry_text1 = tk.StringVar()
         self.entry_text2 = tk.StringVar()
-        self.geometry('600x400')
+        self.geometry('600x400+350+50')
         self.title('Change Lesson Details')
 
         Label(self, text="date:").place(x=100, y=75)
@@ -63,7 +63,7 @@ class TChangeLessonDetails(tkinter.Toplevel):
         if data == "succeed to change lesson details":
             messagebox.showinfo("showinfo", "your details have been successfully updated")
             print(self.student_name)
-            arr_student_name = self.student_name.spilt(" ")
+            arr_student_name = str(self.student_name).split()
             student_fname = arr_student_name[0]
             print(student_fname)
             arr2 = ["send_msg_for_student", self.parent.parent.id_t, student_fname, self.cal.get_date(), "lesson's details have changed"]

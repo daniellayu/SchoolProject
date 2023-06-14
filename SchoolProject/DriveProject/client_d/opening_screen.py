@@ -13,7 +13,7 @@ SIZE = 12
 class OpeningScreen(tkinter.Tk):
     def __init__(self):
         super().__init__()
-        self.geometry('500x550')
+        self.geometry('500x550+350+50')
         self.title('Opening Screen')
         self.config(bg="mint cream")
 

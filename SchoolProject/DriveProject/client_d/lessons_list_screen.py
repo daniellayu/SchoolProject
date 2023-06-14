@@ -18,8 +18,9 @@ class LessonsList(tkinter.Toplevel):
         super().__init__(parent)
         self.parent = parent
         print(self.parent.id_t)
-        self.geometry('800x450')
+        self.geometry('800x450+350+50')
         self.title('Lessons List Screen')
+        Label(self, text="MY LESSONS", fg="#98B4D4", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=400, y=40)
         self.table = ttk.Treeview(self, columns=("c1", "c2", "c3", "c4", "c5"), show="headings", heigh="7")
         self.table.column("#1", anchor=CENTER, width=120)
         self.table.column("#2", anchor=CENTER, width=120)

@@ -50,6 +50,12 @@ class SignupStudent(tkinter.Toplevel):
         if (len(self.entry_id.get()) == 0) or (len(self.entry_password.get()) == 0):
             messagebox.showerror("error", "please write id and password")
             return False
+        arr1 = ["check_id", self.entry_id.get()]
+        str_check = ",".join(arr1)
+        self.parent.send_msg(str_check, self.parent.client_socket)
+        data1 = self.parent.recv_msg(self.parent.client_socket)
+        if data1:
+            messagebox.showerror("error", "student already exists")
         print("sign_up_student")
         arr = ["sign_up_student", self.entry_fname.get(), self.entry_lname.get(), self.entry_email.get(),
                self.entry_password.get(), self.entry_phonenumber.get(), self.entry_id.get()]

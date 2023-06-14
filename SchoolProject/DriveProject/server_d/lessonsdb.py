@@ -145,7 +145,7 @@ class LessonsDb(object):
 
 
 #l = LessonsDb()
-#l.insert_lesson("2", "1", "4/3/2023", "10:00", "170")
+#l.insert_lesson("1", "1", "20/6/2023", "10:00", "170")
 #l.insert_lesson("3", "1", "4.5.2022", "15:30", "170")
 #x = l.get_all_lessons()
 #print(x)

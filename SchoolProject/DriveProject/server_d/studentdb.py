@@ -131,6 +131,21 @@ class StudentDb(object):
             print("student not exist")
             return False
 
+    def is_id_exist(self, id):
+        try:
+            conn = sqlite3.connect('database.db')
+            print("Opened database successfully")
+            str_check = f"SELECT * from {self.__tablename} where {self.__Id} = {id}"
+            print(str_check)
+            cursor = conn.execute(str_check)
+            row = cursor.fetchall()
+            if row:
+                print("student already exists")
+                return True
+        except:
+            print("student doesn't exists")
+            return False
+
     def update_teacher_id(self, teacher_id, id):
         try:
             connection = sqlite3.connect("database.db")

@@ -18,7 +18,7 @@ class SignInScreen(tkinter.Toplevel):
         self.id_t = "0"
         self.teacherdb = TeacherDb()
         self.studentdb = StudentDb()
-        self.geometry('500x500')
+        self.geometry('500x500+350+50')
         self.title('Signin')
         #self.config(bg="#57a1f8")
 

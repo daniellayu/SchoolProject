@@ -10,7 +10,7 @@ class SignUpTeacher(tkinter.Toplevel):
         super().__init__(parent)
         self.parent = parent
         self.teacherDb = TeacherDb()
-        self.geometry('500x500')
+        self.geometry('500x520+350+50')
         self.title('Sign up as teacher')
 
         Label(self, text="SIGN UP TEACHER", fg="#57a1f8", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=120, y=20)
@@ -48,26 +48,38 @@ class SignUpTeacher(tkinter.Toplevel):
         self.entry_experience.place(x=200, y=450)
 
         self.btn_signup = Button(self, text="Sign up", fg='white', bg='#57a1f8',
-                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.sign_up_teacher()).place(x=185, y=480)
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.sign_up_teacher).place(x=185, y=480)
 
         self.btn_close = Button(self, text="go back", background="red", command=self.close).place(x=370, y=470)
 
 
     def sign_up_teacher(self):
         print(self.entry_id.get())
-        if (len(self.entry_id.get()) == 0) or (len(self.entry_password.get()) == 0):
-            messagebox.showerror("error", "please write id and password")
+        if len(self.entry_fname.get()) == 0 or len(self.entry_lname.get()) == 0 or len(
+                self.entry_email.get()) == 0 or len(self.entry_password.get()) == 0 or len(
+                self.entry_phonenumber.get()) == 0 or len(self.entry_id.get()) == 0 or len(
+                self.entry_price.get()) == 0 or len(self.entry_experience.get()) == 0:
+            messagebox.showerror("error", "fill all the empty entries")
             return False
-        print("sign_up_teacher")
-        arr = ["sign_up_teacher", self.entry_fname.get(), self.entry_lname.get(), self.entry_email.get(), self.entry_password.get(), self.entry_phonenumber.get(), self.entry_id.get(), self.entry_price.get(), self.entry_experience.get()]
-        str_insert = ",".join(arr)
-        print(str_insert)
-        self.parent.send_msg(str_insert, self.parent.client_socket)
-        data = self.parent.recv_msg(self.parent.client_socket)
-        print(data)
-        if data == "success Sign up teacher":
-            messagebox.showinfo("showinfo", "your details have been successfully registered as a teacher")
+        arr1 = ["check_id", self.entry_id.get()]
+        str_check = ",".join(arr1)
+        self.parent.send_msg(str_check, self.parent.client_socket)
+        data1 = self.parent.recv_msg(self.parent.client_socket)
+        if data1 == "true":
+            messagebox.showerror("error", "teacher already exists")
             self.close()
+        elif data1 == "false":
+            print("sign_up_teacher")
+            arr = ["sign_up_teacher", self.entry_fname.get(), self.entry_lname.get(), self.entry_email.get(), self.entry_password.get(), self.entry_phonenumber.get(), self.entry_id.get(), self.entry_price.get(), self.entry_experience.get()]
+            str_insert = ",".join(arr)
+            print(str_insert)
+            self.parent.send_msg(str_insert, self.parent.client_socket)
+            data = self.parent.recv_msg(self.parent.client_socket)
+            print(data)
+            if data == "success Sign up teacher":
+                messagebox.showinfo("showinfo", "your details have been successfully registered as a teacher")
+                self.close()
+
 
     def handle_add_user(self):
         self.client_handler = threading.Thread(target=self.sign_up_teacher, args=())

@@ -19,7 +19,7 @@ class SChangeLessonDetails(tkinter.Toplevel):
         print(self.lesson_id)
         self.entry_text1 = tk.StringVar()
         self.entry_text2 = tk.StringVar()
-        self.geometry('600x400')
+        self.geometry('600x400+350+50')
         self.title('Change Lesson Details')
 
         Label(self, text="date:").place(x=100, y=75)

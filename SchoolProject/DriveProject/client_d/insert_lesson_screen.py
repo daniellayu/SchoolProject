@@ -15,7 +15,7 @@ class InsertLesson(tkinter.Toplevel):
         self.price = self.parent.price
         self.entry_text = tk.StringVar()
         self.value_inside = tk.StringVar()
-        self.geometry('700x450')
+        self.geometry('700x450+350+50')
         self.title('Insert Lesson Screen')
         self.cal = Calendar(self, selectmode='day', data_pattern='d/m/yy')
         self.cal.place(x=50, y=50)
@@ -41,8 +41,8 @@ class InsertLesson(tkinter.Toplevel):
         self.btn_close = Button(self, text="go back", bg="red", command=self.close)
         self.btn_close.place(x=600, y=370)
 
-        self.arr_data = []
-        self.disable_days(self.arr_data)
+        # self.arr_data = []
+        # self.disable_days(self.arr_data)
 
 
 
