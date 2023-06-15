@@ -241,6 +241,13 @@ class Server(object):
                 print(server_data)
                 self.send_msg(server_data, client_socket)
 
+            elif arr and len(arr) == 2 and arr[0] == "get_t_work_hours2":
+                teacher_id = self.teacherdb.get_teacher_id_by_id(arr[1])
+                print(teacher_id)
+                server_data = self.teacherdb.get_teacher_hours_by_Id(teacher_id)
+                print(server_data)
+                self.send_msg(server_data, client_socket)
+
             elif arr and len(arr) == 4 and arr[0] == "send_msg_for_teacher":
                 student_id = self.studentdb.get_student_id_by_id(arr[1])
                 print(student_id)
@@ -321,11 +328,11 @@ class Server(object):
     def send_msg(self, data, client_socket):
         try:
             print("message: " + str(data))
-            length = str(len(data)).zfill(SIZE)
+            length = str(len(data)).zfill(SIZE) #the size of the msg
             length = length.encode('utf-8')
             print(length)
             if type(data) != bytes:
-                data = data.encode()
+                data = data.encode()# if not byte send as str
             print(data)
             msg = length + data
             print("message with length: " + str(msg))
@@ -337,18 +344,18 @@ class Server(object):
 
     def recv_msg(self, client_socket, ret_type="string"):
         try:
-            length = client_socket.recv(SIZE).decode('utf-8')
+            length = client_socket.recv(SIZE).decode('utf-8')# recv size of msg
             if not length:
                 print("no length")
                 return None
             print("the length: " + length)
-            data = client_socket.recv(int(length))
+            data = client_socket.recv(int(length)) # the text of tne msg
             if not data:
                 print("no data")
                 return None
             print("the data: " + str(data))
             if ret_type == "string":
-                data = data.decode('utf-8')
+                data = data.decode('utf-8') #recv
             print(data)
             return data
         except:
