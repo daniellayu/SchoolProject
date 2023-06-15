@@ -11,6 +11,8 @@ class LastLessons(tkinter.Toplevel):
         self.parent = parent
         self.geometry('800x450+350+50')
         self.title('Last Lessons Screen')
+        Label(self, text="LAST LESSONS", fg="#57a1f8", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=370, y=40)
+
         self.table = ttk.Treeview(self, columns=("c1", "c2", "c3", "c4", "c5"), show="headings", heigh="7")
         self.table.column("#1", anchor=CENTER, width=120)
         self.table.column("#2", anchor=CENTER, width=120)

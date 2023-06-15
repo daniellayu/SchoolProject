@@ -10,6 +10,8 @@ class TChangeLessonDetails(tkinter.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
+        Label(self, text="LESSON'S DETAILS", fg="#ffe599", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=370, y=40)
+
         #print(self.parent.parent.parent.id_t)
         self.student_name = self.parent.student_name
         print(self.student_name)

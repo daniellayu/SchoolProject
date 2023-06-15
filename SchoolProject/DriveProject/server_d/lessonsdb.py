@@ -141,10 +141,28 @@ class LessonsDb(object):
             print("failed to update time")
             return False
 
+    def is_lesson_exist(self, teacher_id, student_id, date, time):
+        try:
+            connection = sqlite3.connect("database.db")
+            cursor = connection.cursor()
+            select_query = f"SELECT COUNT(*) FROM {self.__tablename} WHERE {self.__teacherId} = ? AND {self.__studentId} = ? AND {self.__date} = ? AND {self.__time} = ?"
+            cursor.execute(select_query, (teacher_id, student_id, date, time))
+            result = cursor.fetchone()
+            connection.close()
+            if result[0] > 0:
+                print("lesson exists")
+                return True
+            else:
+                print("lesson is not exist")
+                return False
+        except:
+            print("Error occurred while checking lesson existence")
+            return False
 
 
 
 #l = LessonsDb()
+#l.is_lesson_exist(1, 1, "20/6/2023", "11:00")
 #l.insert_lesson("1", "1", "20/6/2023", "10:00", "170")
 #l.insert_lesson("3", "1", "4.5.2022", "15:30", "170")
 #x = l.get_all_lessons()
@@ -152,7 +170,7 @@ class LessonsDb(object):
 #y = l.get_price()
 #print(y)
 #print(x[0][0])#1
-#l.delete_lesson_by_id(1)
+#l.delete_lesson_by_id(3)
 #l.update_date(3, "08.09.2022")
 #l.update_time(4, "14:00")
 #l.get_lessons_by_teacher_id(3)

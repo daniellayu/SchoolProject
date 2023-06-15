@@ -1,71 +1,205 @@
 import tkinter
 from tkinter import *
-from tkinter import messagebox
-from SchoolProject.DriveProject.server_d.studentdb import StudentDb
-# from choose_teacher_screen import ChooseTeacher
-import threading
+from tkinter import ttk, messagebox
+from datetime import date as d
+from PIL import ImageTk, Image
 
 
-class SignupStudent(tkinter.Tk):
+
+
+class LessonsList(tkinter.Tk):
     def __init__(self):
         super().__init__()
-        self.studentDb = StudentDb()
-        self.geometry('400x500')
-        self.title('Sign up as student')
-        Label(self, text="SIGN UP STUDENT", background="light blue").place(x=150, y=55)
-        Label(self, text="first name").place(x=75, y=100)
-        self.entry_fname = Entry(self)
-        self.entry_fname.place(x=175, y=100)
-        Label(self, text="last name").place(x=75, y=125)
-        self.entry_lname = Entry(self)
-        self.entry_lname.place(x=175, y=125)
-        Label(self, text="email").place(x=75, y=150)
-        self.entry_email = Entry(self)
-        self.entry_email.place(x=175, y=150)
-        Label(self, text="password").place(x=75, y=175)
-        self.entry_password = Entry(self)
-        self.entry_password.place(x=175, y=175)
-        Label(self, text="phone number").place(x=75, y=200)
-        self.entry_phonenumber = Entry(self)
-        self.entry_phonenumber.place(x=175, y=200)
-        Label(self, text="ID").place(x=75, y=225)
-        self.entry_id = Entry(self)
-        self.entry_id.place(x=175, y=225)
-        self.btn_signup = Button(self, text="Sign up", background="purple", command=self.sign_up_student).place(x=150, y=300)
-        self.btn_close = Button(self, text="close", background="red", command=self.close).place(x=150, y=350)
+        self.geometry('800x400+350+50')
+        self.title('Lessons List Screen')
+        Label(self, text="MY LESSONS", fg="#98B4D4", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=370, y=40)
+        self.table = ttk.Treeview(self, columns=("c1", "c2", "c3", "c4", "c5"), show="headings", heigh="7")
+        self.table.column("#1", anchor=CENTER, width=120)
+        self.table.column("#2", anchor=CENTER, width=120)
+        self.table.column("#3", anchor=CENTER, width=120)
+        self.table.column("#4", anchor=CENTER, width=120)
+        self.table.column("#5", anchor=CENTER, width=120)
+        self.table.heading("#1", text="lessonId")
+        self.table.heading("#2", text="student name")
+        self.table.heading("#3", text="date")
+        self.table.heading("#4", text="time")
+        self.table.heading("#5", text="price")
+        self.table.place(x=170, y=100)
+        #self.listbox()
+        #self.table.bind('<Button-1>', self.select_line)
 
-    def sign_up_student(self):
-        print(self.entry_id.get())
-        if (len(self.entry_id.get()) == 0) or (len(self.entry_password.get()) == 0):
-            messagebox.showerror("error", "please write id and password")
-            return False
-        print("sign_up_student")
-        arr = ["sign_up_student", self.entry_fname.get(), self.entry_lname.get(), self.entry_email.get(),
-               self.entry_password.get(), self.entry_phonenumber.get(), self.entry_id.get()]
-        str_insert = ",".join(arr)
-        print(str_insert)
-        self.parent.send_msg(str_insert, self.parent.client_socket)
-        data = self.parent.recv_msg(self.parent.client_socket)
+        #self.config(bg="#ff00b7")
+
+        self.btn_last = Button(self, text="last lessons", fg='white', bg='#57a1f8',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.open_last_lessons)
+        self.btn_last.place(x=20, y=100)
+
+        # self.img3 = Image.open('C://Users//danie//OneDrive//שולחן העבודה//python img//students list btn.png')
+        # self.resized = self.img3.resize((100, 50), Image.Resampling.LANCZOS)
+        # self.img_s_list = ImageTk.PhotoImage(self.resized)
+        self.btn_s_list = Button(self, text="students list", fg='white', bg='#987890',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.open_student_list)
+        self.btn_s_list.place(x=20, y=150)
+
+
+
+        self.btn_update_t_details = Button(self, text="update details", fg='white', bg='#C1B8AB',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.open_update_t_details)
+        self.btn_update_t_details.place(x=20, y=200)
+
+        # self.img4 = Image.open('C://Users//danie//OneDrive//שולחן העבודה//python img//work days btn.png')
+        # self.resized = self.img4.resize((100, 50), Image.Resampling.LANCZOS)
+        # self.img_choose_days = ImageTk.PhotoImage(self.resized)
+        self.btn_choose_days = Button(self, text="my work days", fg='white', bg='#99CCCC',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.open_update_t_work_hours)
+        self.btn_choose_days.place(x=20, y=250)
+
+        self.img = Image.open('C://Users//danie//OneDrive//שולחן העבודה//python img//refresh btn.png')
+        self.resized = self.img.resize((35, 35), Image.Resampling.LANCZOS)
+        self.img_refresh = ImageTk.PhotoImage(self.resized)
+        self.btn_refresh = Button(self, text="refresh", command=self.refresh, fg='white',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), image=self.img_refresh)
+        self.btn_refresh.place(x=700, y=45)
+
+        self.img2 = Image.open('C://Users//danie//OneDrive//שולחן העבודה//python img//chat.png')
+        self.resized2 = self.img2.resize((40, 40), Image.Resampling.LANCZOS)
+        self.img_chat = ImageTk.PhotoImage(self.resized2)
+        self.btn_chat = Button(self, text="chat", fg='white',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.open_chat_teacher,
+                                  image=self.img_chat)
+        self.btn_chat.place(x=50, y=330)
+
+        self.btn_cancel = Button(self, text="cancel lesson", fg='white', bg='#e06666',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.delete_lesson)
+        self.btn_cancel.place(x=250, y=330)
+
+        self.btn_change = Button(self, text="change lesson details", fg='white', bg='#ffe599',
+                                 font=('Microsoft YaHei UI Light', 11, 'bold'), command=self.change_lesson_details)
+        self.btn_change.place(x=400, y=330)
+
+        self.btn_close = Button(self, text="go back", background="red", command=self.close)
+        self.btn_close.place(x=650, y=330)
+
+
+    # def listbox(self):
+    #     arr = ["lessons_list", self.parent.id_t]
+    #     str1 = arr[0] + "," + (arr[1])
+    #     print(str1)
+    #     self.parent.parent.send_msg(str1, self.parent.parent.client_socket)
+    #     data = self.parent.parent.recv_msg(self.parent.parent.client_socket)
+    #     print(data)
+    #     arr_data = data.split("-")
+    #     print(arr_data)
+    #     for item in arr_data:
+    #         line1 = item.split(",")
+    #         print(line1)
+    #         student_id = line1[2]
+    #         print(student_id)
+    #         arr2 = ["student_id_to_name", student_id]
+    #         str2 = arr2[0] + "," + arr2[1]
+    #         self.parent.parent.send_msg(str2, self.parent.parent.client_socket)
+    #         student_name = self.parent.parent.recv_msg(self.parent.parent.client_socket)
+    #         print("student name: " + student_name)
+    #
+    #         date = line1[3].split("/")
+    #         print(date) #['10', '7', '22']
+    #         month = int(date[0])
+    #         day = int(date[1])
+    #         #year = date[2]
+    #         today_date = str(d.today())
+    #         print(today_date)
+    #         arr_today_date = today_date.split("-")
+    #         print(arr_today_date) #['2023', '04', '07']
+    #         if month >= int(arr_today_date[1]):
+    #             if (month == int(arr_today_date[1]) and day >= int(arr_today_date[2])) or (month > int(arr_today_date[1])):
+    #                 self.table.insert("", 'end', text="1", values=(line1[0], student_name, line1[3], line1[4], line1[5]))
+    #
+    #
+    # def select_line(self, event):
+    #     curItem = self.table.focus()
+    #     print(curItem)
+    #     print(self.table.item(curItem)['values'])
+    #     self.x = self.table.item(curItem)['values']
+    #     self.lesson_id = self.x[0]
+    #     print(self.lesson_id)
+    #     self.student_name = self.x[1]
+    #     print(self.student_name)
+    #     self.date = self.x[2]
+    #     print(self.date)
+    #     self.time = self.x[3]
+    #     print(self.time)
+
+
+
+
+    def open_last_lessons(self):
+        # window = LastLessons(self)
+        # window.grab_set()
+        self.withdraw()
+
+
+    def open_student_list(self):
+        # window = StudentsList(self)
+        # window.grab_set()
+        self.withdraw()
+
+
+    def open_update_t_details(self):
+        # window = UpdateDetails(self)
+        # window.grab_set()
+        self.withdraw()
+
+    def open_chat_teacher(self):
+        # window = ChatTeacher(self)
+        # window.grab_set()
+        self.withdraw()
+
+    def open_update_t_work_hours(self):
+        # window = UpdateTeacherWorkTime(self)
+        # window.grab_set()
+        self.withdraw()
+
+    def refresh(self):
+        for item in self.table.get_children():
+            self.table.delete(item)
+        self.listbox()
+
+
+
+    def delete_lesson(self):
+        arr = ["delete_lesson", self.x[0]]
+        print(arr)
+        str1 = arr[0] + "," + str(arr[1])
+        print(str1)
+        self.parent.parent.send_msg(str1, self.parent.parent.client_socket)
+        data = self.parent.parent.recv_msg(self.parent.parent.client_socket)  # recived success or failed
         print(data)
-        if data == "success Sign up student":
-            messagebox.showinfo("showinfo", "your details have been successfully registered as a student")
-            self.close()
+        if data == "succeed to delete lesson":
+            messagebox.showinfo("showinfo", "you deleted lesson successfully")
+            student_fname = self.parent.student_name.spilt()[0]
+            print(student_fname)
+            arr2 = ["send_msg_for_student", self.parent.parent.id_t, student_fname, self.cal.get_date(),
+                    "lesson's details have changed"]
+            str2 = ",".join(arr2)
+            self.parent.parent.parent.send_msg(str2, self.parent.parent.parent.client_socket)
+            data2 = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
+            print(data2)
+        if data == "failed to delete lesson":
+            messagebox.showerror("error", "error")
 
-    def handle_add_user(self):
-        self.client_handler = threading.Thread(target=self.sign_up_student, args=())
-        self.client_handler.daemon = True
-        self.client_handler.start()
 
+    def change_lesson_details(self):
+        # window = TChangeLessonDetails(self)
+        # window.grab_set()
+        self.withdraw()
 
-    # def open_choose_teacher(self):
-    #     window = ChooseTeacher(self)
-    #     window.grab_set()
-    #     self.withdraw()
 
 
     def close(self):
-        self.parent.deiconify() #show parent
-        self.destroy()# close and destroy this screen
+        self.parent.deiconify()
+        self.destroy()
 
 
-SignupStudent.mainloop()
+
+l = LessonsList()
+l.mainloop()

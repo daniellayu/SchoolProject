@@ -6,6 +6,7 @@ from lessonsdb import LessonsDb
 from messagesdb_s import MessagesDb_Students
 from messagesdb_t import MessagesDb
 
+
 SIZE = 12
 
 
@@ -20,6 +21,9 @@ class Server(object):
         self.lessonsdb = LessonsDb()
         self.messagesdb_s = MessagesDb_Students()
         self.messagesdb_t = MessagesDb()
+
+
+
 
     def start(self):
         try:
@@ -39,6 +43,10 @@ class Server(object):
                 self.handleClient(clientSocket, self.count)
         except socket.error as e:
             print(e)
+
+
+
+
 
     def handleClient(self, clientSock, current):
         client_handler = threading.Thread(target=self.handle_client_connection, args=(clientSock, current,))
@@ -165,9 +173,21 @@ class Server(object):
                 elif server_data:
                     self.send_msg("failed to change lesson details", client_socket)
 
-            elif arr and len(arr) == 5 and arr[0] == "insert_lesson":
+            elif arr and len(arr) == 5 and arr[0] == "check_lesson":
                 # teacher_id = self.teacherdb.get_teacher_id_by_id(arr[1])
                 # print(teacher_id)
+                student_id = self.studentdb.get_student_id_by_id(arr[1])
+                print(student_id)
+                teacher_id = self.studentdb.get_teacher_id_by_student_id(student_id)
+                print(teacher_id)
+                is_exist = self.lessonsdb.is_lesson_exist(teacher_id, student_id, arr[2], arr[3])
+                if is_exist == True:
+                    self.send_msg("lesson is exist", client_socket)
+                elif is_exist == False:
+                    self.send_msg("lesson is not exist", client_socket)
+
+
+            elif arr and len(arr) == 5 and arr[0] == "insert_lesson":
                 student_id = self.studentdb.get_student_id_by_id(arr[1])
                 print(student_id)
                 teacher_id = self.studentdb.get_teacher_id_by_student_id(student_id)
@@ -239,13 +259,25 @@ class Server(object):
                 print(server_data)
                 self.send_msg("message successfully sent", client_socket)
 
-            elif arr and len(arr) == 2 and arr[0] == "check_id":
-                server_data = self.teacherdb.is_id_exist(arr[1])
-                print(server_data)
-                if server_data:
-                    self.send_msg("true", client_socket)
-                elif server_data:
-                    self.send_msg("false", client_socket)
+            elif arr and len(arr) == 2 and arr[0] == "get_t_price":
+                student_id = self.studentdb.get_student_id_by_id(arr[1])
+                print(student_id)
+                teacher_id = self.studentdb.get_teacher_id_by_student_id(student_id)
+                print(teacher_id)
+                price = self.teacherdb.get_teacher_price_by_id(teacher_id)
+                print(price)
+                str_price = str(price)
+                self.send_msg(str_price, client_socket)
+
+            # elif arr and len(arr) == 2 and arr[0] == "check_id":
+            #     server_data = self.teacherdb.is_id_exist(arr[1])
+            #     print(server_data)
+            #     if server_data == True:
+            #         self.send_msg("true", client_socket)
+            #     if server_data == False:
+            #         self.send_msg("false", client_socket)
+            #     if server_data == None:
+            #         self.send_msg("false", client_socket)
 
 
 
@@ -260,6 +292,27 @@ class Server(object):
             #     print(string_data)
             #     client_socket.send(string_data.encode())
 
+            elif arr and len(arr) == 2 and arr[0] == "s_messages":
+                student_id = self.studentdb.get_student_id_by_id(arr[1])
+                print(student_id)
+                server_data = self.messagesdb_s.get_all_messages_for_student(student_id)
+                print(server_data)
+                # Use list comprehension to join each tuple with the delimiter
+                string_data = '-'.join([','.join(map(str, item)) for item in server_data])
+                print(string_data)
+                self.send_msg(string_data, client_socket)
+
+
+            elif arr and len(arr) == 2 and arr[0] == "t_messages":
+                print(1)
+                teacher_id = self.teacherdb.get_teacher_id_by_id(arr[1])
+                print(teacher_id)
+                server_data = self.messagesdb_t.get_all_messages_for_teacher(teacher_id)
+                print(server_data)
+                # Use list comprehension to join each tuple with the delimiter
+                string_data = '-'.join([','.join(map(str, item)) for item in server_data])
+                print(string_data)
+                self.send_msg(string_data, client_socket)
 
             else:
                 print(arr)
@@ -305,7 +358,7 @@ class Server(object):
 
 
 if __name__ == '__main__':
-    ip = '10.81.204.135'
+    ip = '127.0.0.1'
     port = 1802
     s = Server(ip, port)
     s.start()

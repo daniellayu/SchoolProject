@@ -1,7 +1,6 @@
 import tkinter
 from tkinter import *
 from tkinter import messagebox
-from SchoolProject.DriveProject.server_d.studentdb import StudentDb
 from choose_teacher_screen import ChooseTeacher
 import threading
 
@@ -10,8 +9,7 @@ class SignupStudent(tkinter.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.studentDb = StudentDb()
-        self.geometry('500x500')
+        self.geometry('500x500+350+50')
         self.title('Sign up as student')
 
         Label(self, text="SIGN UP STUDENT", fg="#57a1f8", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=125, y=30)
@@ -50,12 +48,12 @@ class SignupStudent(tkinter.Toplevel):
         if (len(self.entry_id.get()) == 0) or (len(self.entry_password.get()) == 0):
             messagebox.showerror("error", "please write id and password")
             return False
-        arr1 = ["check_id", self.entry_id.get()]
-        str_check = ",".join(arr1)
-        self.parent.send_msg(str_check, self.parent.client_socket)
-        data1 = self.parent.recv_msg(self.parent.client_socket)
-        if data1:
-            messagebox.showerror("error", "student already exists")
+        # arr1 = ["check_id", self.entry_id.get()]
+        # str_check = ",".join(arr1)
+        # self.parent.send_msg(str_check, self.parent.client_socket)
+        # data1 = self.parent.recv_msg(self.parent.client_socket)
+        # if data1:
+        #     messagebox.showerror("error", "student already exists")
         print("sign_up_student")
         arr = ["sign_up_student", self.entry_fname.get(), self.entry_lname.get(), self.entry_email.get(),
                self.entry_password.get(), self.entry_phonenumber.get(), self.entry_id.get()]

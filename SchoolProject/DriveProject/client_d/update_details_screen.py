@@ -9,6 +9,8 @@ class UpdateDetails(tkinter.Toplevel):
         self.parent = parent
         self.geometry('400x400+350+50')
         self.title('Update Details Screen')
+        Label(self, text="MY DETAILS", fg="#C1B8AB", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=100, y=40)
+
         # Label(self, text="first name:").place(x=40, y=75)
         # self.entry_fname = Entry(self)
         # self.entry_fname.place(x=125, y=75)

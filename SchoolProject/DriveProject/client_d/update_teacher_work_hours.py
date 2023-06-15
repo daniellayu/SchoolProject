@@ -129,7 +129,6 @@ class UpdateTeacherWorkTime(tkinter.Toplevel):
         data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
         if data == "succeed to update teacher's days":
             messagebox.showinfo("showinfo", "succeed to update teacher's days")
-            self.close()
         elif data == "failed to update teacher's days":
             messagebox.showerror("error", "failed to update teacher's days")
 
@@ -169,7 +168,6 @@ class UpdateTeacherWorkTime(tkinter.Toplevel):
         data = self.parent.parent.parent.recv_msg(self.parent.parent.parent.client_socket)
         if data == "succeed to update teacher's hours":
             messagebox.showinfo("showinfo", "succeed to update teacher's hours")
-            self.close()
         elif data == "failed to update teacher's hours":
             messagebox.showerror("error", "failed to update teacher's hours")
 

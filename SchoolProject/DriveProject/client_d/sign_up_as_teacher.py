@@ -1,15 +1,14 @@
 import tkinter
 from tkinter import *
-from SchoolProject.DriveProject.server_d.teacherdb import TeacherDb
 from tkinter import messagebox
 import threading
+
 
 
 class SignUpTeacher(tkinter.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.parent = parent
-        self.teacherDb = TeacherDb()
         self.geometry('500x520+350+50')
         self.title('Sign up as teacher')
 
@@ -61,24 +60,25 @@ class SignUpTeacher(tkinter.Toplevel):
                 self.entry_price.get()) == 0 or len(self.entry_experience.get()) == 0:
             messagebox.showerror("error", "fill all the empty entries")
             return False
-        arr1 = ["check_id", self.entry_id.get()]
-        str_check = ",".join(arr1)
-        self.parent.send_msg(str_check, self.parent.client_socket)
-        data1 = self.parent.recv_msg(self.parent.client_socket)
-        if data1 == "true":
-            messagebox.showerror("error", "teacher already exists")
+        # arr1 = ["check_id", self.entry_id.get()]
+        # str_check = ",".join(arr1)
+        # self.parent.send_msg(str_check, self.parent.client_socket)
+        # data1 = self.parent.recv_msg(self.parent.client_socket)
+        # print(data1)
+        # if data1 == "true":
+        #     messagebox.showerror("error", "teacher already exists")
+        #     self.close()
+        # if data1 == "false":
+        print("sign_up_teacher")
+        arr = ["sign_up_teacher", self.entry_fname.get(), self.entry_lname.get(), self.entry_email.get(), self.entry_password.get(), self.entry_phonenumber.get(), self.entry_id.get(), self.entry_price.get(), self.entry_experience.get()]
+        str_insert = ",".join(arr)
+        print(str_insert)
+        self.parent.send_msg(str_insert, self.parent.client_socket)
+        data = self.parent.recv_msg(self.parent.client_socket)
+        print(data)
+        if data == "success Sign up teacher":
+            messagebox.showinfo("showinfo", "your details have been successfully registered as a teacher")
             self.close()
-        elif data1 == "false":
-            print("sign_up_teacher")
-            arr = ["sign_up_teacher", self.entry_fname.get(), self.entry_lname.get(), self.entry_email.get(), self.entry_password.get(), self.entry_phonenumber.get(), self.entry_id.get(), self.entry_price.get(), self.entry_experience.get()]
-            str_insert = ",".join(arr)
-            print(str_insert)
-            self.parent.send_msg(str_insert, self.parent.client_socket)
-            data = self.parent.recv_msg(self.parent.client_socket)
-            print(data)
-            if data == "success Sign up teacher":
-                messagebox.showinfo("showinfo", "your details have been successfully registered as a teacher")
-                self.close()
 
 
     def handle_add_user(self):

@@ -1,38 +1,33 @@
-# Import the tkinter module
-import tkinter
-
-# Create the default window
-root = tkinter.Tk()
-root.title("Welcome to GeeksForGeeks")
-root.geometry('700x500')
-
-# Create the list of options
-options_list = ["Option 1", "Option 2", "Option 3", "Option 4"]
-
-# Variable to keep track of the option
-# selected in OptionMenu
-value_inside = tkinter.StringVar(root)
-
-# Set the default value of the variable
-value_inside.set("Select an Option")
-
-# Create the optionmenu widget and passing
-# the options_list and value_inside to it.
-question_menu = tkinter.OptionMenu(root, value_inside, *options_list)
-question_menu.pack()
-
-# Function to print the submitted option-- testing purpose
+import tkinter as tk
+from tkcalendar import Calendar, DateEntry
 
 
-def print_answers():
-	print("Selected Option: {}".format(value_inside.get()))
-	return None
+class MyCalendarApp:
+    def __init__(self):
+        self.root = tk.Tk()
+        self.calendar = Calendar(self.root, selectmode="day", year=2023, month=6, day=1)
+        self.calendar.pack()
+        self.calendar.bind("<<CalendarSelected>>", self.handle_selection)
+
+        # Disable Sundays in the calendar
+        self.calendar.datevalidation_callback = self.validate_date
+
+    def validate_date(self, date):
+        # Check if the selected date is a Sunday (weekday == 6)
+        if date.weekday() == 6:
+            return False
+        return True
+
+    def handle_selection(self, event):
+        selected_date = self.calendar.selection_get()
+        print("Selected date:", selected_date)
+
+    def run(self):
+        self.root.mainloop()
 
 
-# Submit button
-# Whenever we click the submit button, our submitted
-# option is printed ---Testing purpose
-submit_button = tkinter.Button(root, text='Submit', command=print_answers)
-submit_button.pack()
+# Create an instance of the MyCalendarApp class
+app = MyCalendarApp()
 
-root.mainloop()
+# Run the application
+app.run()

@@ -1,4 +1,5 @@
 import sqlite3
+import hashlib
 
 class StudentDb(object):
     def __init__(self, tablename="StudentDb", studentId="studentId", firstname="firstname", lastname="lastname",
@@ -44,10 +45,12 @@ class StudentDb(object):
         try:
             connection = sqlite3.connect("database.db")
             cursor = connection.cursor()
+            salt = "PYTHON"
+            md5hash = hashlib.md5(salt.encode('utf-8') + password.encode()).hexdigest()
             insert_query = f"INSERT INTO {self.__tablename} ({self.__firstname}, {self.__lastname}," \
                            f" {self.__email}, {self.__password}, {self.__phonenumber}, {self.__Id}, {self.__teacherId}" \
                            f" ) VALUES (?, ?, ?, ?, ?, ?, ?)"
-            cursor.execute(insert_query, (firstname, lastname, email, password, phonenumber, Id, 0))
+            cursor.execute(insert_query, (firstname, lastname, email, str(md5hash), phonenumber, Id, 0))
             connection.commit()#release db
             connection.close()
             print("succeed to insert student")
@@ -55,6 +58,8 @@ class StudentDb(object):
         except:
             print("failed to insert student")
             return False
+
+
 
     def get_all_students(self):
         try:
@@ -120,7 +125,9 @@ class StudentDb(object):
     def is_exist(self, id, password):
         conn = sqlite3.connect('database.db')
         print("Opened database successfully")
-        str_check = "SELECT * from " + self.__tablename + " where " + self.__Id + " = '" +id +"' and " +self.__password+" = '"+str(password)+"'"
+        salt = "PYTHON"
+        md5hash = hashlib.md5(salt.encode('utf-8') + password.encode()).hexdigest()
+        str_check = "SELECT * from " + self.__tablename + " where " + self.__Id + " = '" +id +"' and " +self.__password+" = '"+str(md5hash)+"'"
         print(str_check)
         cursor = conn.execute(str_check)
         row = cursor.fetchall()
@@ -131,20 +138,20 @@ class StudentDb(object):
             print("student not exist")
             return False
 
-    def is_id_exist(self, id):
-        try:
-            conn = sqlite3.connect('database.db')
-            print("Opened database successfully")
-            str_check = f"SELECT * from {self.__tablename} where {self.__Id} = {id}"
-            print(str_check)
-            cursor = conn.execute(str_check)
-            row = cursor.fetchall()
-            if row:
-                print("student already exists")
-                return True
-        except:
-            print("student doesn't exists")
-            return False
+    # def is_id_exist(self, id):
+    #     try:
+    #         conn = sqlite3.connect('database.db')
+    #         print("Opened database successfully")
+    #         str_check = f"SELECT * from {self.__tablename} where {self.__Id} = {id}"
+    #         print(str_check)
+    #         cursor = conn.execute(str_check)
+    #         row = cursor.fetchall()
+    #         if row:
+    #             print("student already exists")
+    #             return True
+    #     except:
+    #         print("student doesn't exists")
+    #         return False
 
     def update_teacher_id(self, teacher_id, id):
         try:

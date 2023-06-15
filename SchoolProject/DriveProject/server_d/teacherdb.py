@@ -1,4 +1,5 @@
 import sqlite3
+import hashlib
 
 class TeacherDb(object):
     def __init__(self, tablename="teacherDb", teacherId="teacherId", firstname="firstname", lastname="lastname", email="email", phonenumber="phonenumber", Id="Id", password="password", price="price", experience="experience", days="days", hours="hours"):
@@ -49,10 +50,12 @@ class TeacherDb(object):
         try:
             connection = sqlite3.connect("database.db")
             cursor = connection.cursor()
+            salt = "PYTHON"
+            md5hash = hashlib.md5(salt.encode('utf-8') + password.encode()).hexdigest()
             insert_query = f"INSERT INTO {self.__tablename} ({self.__firstname}, {self.__lastname}," \
                            f" {self.__email}, {self.__password}, {self.__phonenumber}, {self.__Id}, {self.__price}," \
                        f" {self.__experience}, {self.__days}, {self.__hours}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-            cursor.execute(insert_query, (firstname, lastname, email, password, phonenumber, Id, price, experience, "", ""))
+            cursor.execute(insert_query, (firstname, lastname, email, str(md5hash), phonenumber, Id, price, experience, "", ""))
             connection.commit()#release db
             connection.close()
             print("succeed to insert teacher")
@@ -107,7 +110,9 @@ class TeacherDb(object):
         try:
             conn = sqlite3.connect('database.db')
             print("Opened database successfully")
-            str_check = "SELECT * from " + self.__tablename + " where " + self.__Id + " = '" +id +"' and " +self.__password+" = '"+str(password)+"'"
+            salt = "PYTHON"
+            md5hash = hashlib.md5(salt.encode('utf-8') + password.encode()).hexdigest()
+            str_check = "SELECT * from " + self.__tablename + " where " + self.__Id + " = '" +id +"' and " +self.__password+" = '"+str(md5hash)+"'"
             print(str_check)
             cursor = conn.execute(str_check)
             row = cursor.fetchall()
@@ -257,6 +262,28 @@ class TeacherDb(object):
         except:
             return "failed to get teacher's hours"
 
+    def get_teacher_price_by_id(self, teacher_id):
+        try:
+            connection = sqlite3.connect("database.db")
+            cursor = connection.cursor()
+            select_query = f"SELECT {self.__price} FROM {self.__tablename} WHERE {self.__teacherId} = ?"
+            cursor.execute(select_query, (teacher_id,))
+            result = cursor.fetchone()
+            connection.close()
+
+            if result:
+                price = result[0]
+                print("succeed to get teacher's price")
+                print(price)
+                return price
+            else:
+                print("Teacher not found")
+                return None
+        except:
+            print("Failed to retrieve teacher price")
+            return None
+
+
 
 #t = TeacherDb()
 #t.insert("dani1", "yusu1", "danngi23", "p1", "34551", "1231", "1501", "31")
@@ -271,4 +298,4 @@ class TeacherDb(object):
 #t.update_days(1, "sunday")
 #t.get_teacher_days_by_Id(144)
 #t.is_id_exist(144567890)
-
+#t.get_teacher_price_by_id(1)

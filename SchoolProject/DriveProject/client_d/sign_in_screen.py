@@ -53,15 +53,13 @@ class SignInScreen(tkinter.Toplevel):
             return
         print("sign in", self.radio.get())
         if self.radio.get() == 0:
-            messagebox.showerror("error", "please choose if you tea")
+            messagebox.showerror("error", "please choose if you teacher or student")
         if self.radio.get() == 1:
             arr = ["sign_in_teacher", self.entry_id.get(), self.entry_password.get()]
             str_insert = ",".join(arr)
             print(str_insert)
             self.parent.send_msg(str_insert, self.parent.client_socket)
             data = self.parent.recv_msg(self.parent.client_socket)
-            #self.parent.client_socket.send(str_insert.encode())#sending line 41
-            #data = self.parent.client_socket.recv(1024).decode()#recived success or failed
             print(data)
             self.id_t = self.entry_id.get()
             if data == "success Sign in":

@@ -11,7 +11,7 @@ class ChooseTeacher(tkinter.Toplevel):
         print(self.parent.parent.parent.client_socket)
         self.geometry('800x400+350+50')
         self.title('Choose Teacher Screen')
-        #Label(self, text="choose your teacher").place(x=100, y=35)
+        Label(self, text="CHOOSE TEACHER", fg="#93c47d", font=('Microsoft YaHei UI Light', 23, 'bold')).place(x=200, y=40)
         self.table = ttk.Treeview(self, columns=("c1", "c2", "c3", "c4", "c5", "c6", "c7"), show="headings", heigh="7")
         self.table.column("#1", anchor=CENTER, width=70)
         self.table.column("#2", anchor=CENTER, width=100)
@@ -68,7 +68,7 @@ class ChooseTeacher(tkinter.Toplevel):
         print(line1)
         for item in arr_data:
             line1 = item.split(",")
-            self.table.insert("", 'end', text="1", values=(line1[0], line1[1], line1[2], line1[3], line1[4], line1[5], line1[6]))
+            self.table.insert("", 'end', text="1", values=(line1[0], line1[1], line1[2], line1[3], line1[5], line1[8], line1[7]))
 
 
     def close(self):
